@@ -1,6 +1,27 @@
 <resources>
-    <string name="app_name">AndroidVoiceMemo</string>
+    <!-- Названия окон -->
+    <string name="app_name">Голосовые заметки</string>
+    <string name="app_name_addNote">Создать заметку</string>
+    <string name="app_name_viewNote">Просмотр заметки</string>
+    <string name="app_name_searchNote">Поиск по заметкам</string>
+    <string name="app_name_settings">Настройки</string>
+    <string name="app_name_export_import">Импорт/экспорт</string>
+    <string name="app_exit">Выход</string>
 
+
+    <!-- Остальное -->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+        <!-- Основное окно -->
+        <string name="main_add_memo">Сделать заметку</string>
+        <string name="main_search">Найти</string>
+
+        <!-- Окно Сделать запись -->
+        <string name="addNote_record">Идёт запись...</string>
+        <string name="addNote_save">Сохранить</string>
+        <string name="addNote_cancel">Отменить</string>
+
+        <!-- Окно Сделать запись -->
+
 </resources>
