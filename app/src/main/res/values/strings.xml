@@ -22,6 +22,7 @@
         <string name="addNote_save">Сохранить</string>
         <string name="addNote_cancel">Отменить</string>
 
-        <!-- Окно Сделать запись -->
-
+        <!-- Окно просмотреть запись -->
+        <string name="viewNote_copy">Коппировать текст заметки</string>
+        <string name="viewNote_listen">Прослушать</string>
 </resources>

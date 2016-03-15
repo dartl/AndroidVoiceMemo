@@ -4,10 +4,12 @@ import android.database.Cursor;
 
 import com.androidvoicememo.db.SQLiteDBHelper;
 
+import java.io.Serializable;
+
 /**
  * Created by Dartl on 03.03.2016.
  */
-public class Note {
+public class Note implements Serializable {
     private int id;
     private String path_file;
     private String text_note;
