@@ -130,7 +130,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         // Если мы вернулись с окна Создания Заметки, нажав "Сохранить", то сохраняем в БД
-        if (requestCode == ADD_NEW_NOTE) {
+
+        if (requestCode == ADD_NEW_NOTE && resultCode == RESULT_OK) {
             Note new_note = (Note) data.getSerializableExtra("new_note");
             data.removeExtra("new_note");
             if (new_note != null) {
@@ -141,8 +142,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 db.insert(SQLiteDBHelper.NOTES_TABLE_NAME, null, newValues);
                 cursor_Notes = db.rawQuery("SELECT * FROM " +
                         SQLiteDBHelper.NOTES_TABLE_NAME, null);
-                cursor_Notes.moveToLast();
-                sAdapterNotes.notifyDataSetChanged();
+                sAdapterNotes.changeCursor(cursor_Notes);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

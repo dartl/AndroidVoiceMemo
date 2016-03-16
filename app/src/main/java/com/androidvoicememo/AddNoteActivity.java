@@ -124,9 +124,6 @@ public class AddNoteActivity extends MainActivity {
                 break;
             /* Клик по кнопке "Отмена" */
             case R.id.btn_addNote_cancel:
-                if (mediaRecorder != null) {
-                    mediaRecorder.stop();
-                }
                 finish();
                 break;
             default:
