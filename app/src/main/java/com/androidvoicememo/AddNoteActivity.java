@@ -42,6 +42,7 @@ public class AddNoteActivity extends MainActivity {
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
     private String fileName;
+    private String spokenText = "Текст не удалось распознать";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,10 @@ public class AddNoteActivity extends MainActivity {
         btn_addNote_cancel.setOnClickListener(this);
 
         /* Начало записи звука */
-        fileName = Environment.getExternalStorageDirectory() + DIRECTORY + "/record.3gpp";
+
+        fileName = Environment.getExternalStorageDirectory() + DIRECTORY;
+        new File(fileName ).mkdirs();
+        fileName += "/record.3gpp";
         try {
             releaseRecorder();
 
@@ -76,7 +80,7 @@ public class AddNoteActivity extends MainActivity {
 
             mediaRecorder.prepare();
             mediaRecorder.start();
-            //displaySpeechRecognizer();
+            displaySpeechRecognizer();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,33 +112,22 @@ public class AddNoteActivity extends MainActivity {
         switch (v.getId()) {
             /* Клик по кнопке "Сохранить" */
             case R.id.btn_addNote_save:
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                }
                 long date = System.currentTimeMillis();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy k:mm");
                 String dateString = dateFormat.format(date);
-                Note note = new Note(-1, fileName, "Текст", dateString);
+                Note note = new Note(-1, fileName, spokenText, dateString);
                 Intent intent = new Intent();
                 intent.putExtra("new_note", note);
-                /*try {
-                    releasePlayer();
-                    mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setDataSource(fileName);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
+
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
             /* Клик по кнопке "Отмена" */
             case R.id.btn_addNote_cancel:
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
+                if (mediaRecorder != null) {
+                    mediaRecorder.stop();
                 }
-                this.finish();
+                finish();
                 break;
             default:
                 break;
@@ -147,7 +140,6 @@ public class AddNoteActivity extends MainActivity {
     private void displaySpeechRecognizer() {
 
         PackageManager pm = this.getPackageManager();
-        // получаем список Activity способных обработать запрос на распознавание
         List activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
 
         if (activities.size() != 0) {	// если список не пустой
@@ -171,14 +163,14 @@ public class AddNoteActivity extends MainActivity {
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         timer.stop();
+        if (mediaRecorder != null) {
+            mediaRecorder.stop();
+        }
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
-            if (mediaRecorder != null) {
-                mediaRecorder.stop();
-            }
 
-            String spokenText = results.get(0);
+            spokenText = results.get(0);
             // Do something with spokenText
             TextView recognizeText = (TextView) findViewById(R.id.recognizeText);
             recognizeText.setText(spokenText);
