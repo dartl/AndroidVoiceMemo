@@ -3,9 +3,10 @@
     package="com.androidvoicememo" >
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="22">
+    </uses-sdk>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,8 +28,7 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.ALL_APPS" />
-
-                <category android:name="android.intent.category.APP_MUSIC" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".ViewNoteActivity"
