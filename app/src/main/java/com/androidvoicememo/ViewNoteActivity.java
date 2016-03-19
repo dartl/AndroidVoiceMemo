@@ -1,12 +1,17 @@
 package com.androidvoicememo;
 
+import android.app.NotificationManager;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidvoicememo.adapters.TimeNotification;
 import com.androidvoicememo.model.Note;
 
 /**
@@ -15,55 +20,49 @@ import com.androidvoicememo.model.Note;
 public class ViewNoteActivity extends MainActivity {
     private TextView viewNote_textVDate;
     private TextView viewNote_textVText;
-    private Button startRecord;
+    private Button btn_deleteNote;
+    private Button btn_copyText;
+    private Note note;
 
     private String fileName;
-    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_note_activity);
-
         /* Выводим данные полученные из основного списка */
         viewNote_textVDate = (TextView) findViewById(R.id.viewNote_textVDate);
         viewNote_textVText = (TextView) findViewById(R.id.viewNote_textVText);
-        startRecord = (Button) findViewById(R.id.startRecord);
+        btn_deleteNote = (Button) findViewById(R.id.btn_deleteNote);
+        btn_copyText = (Button) findViewById(R.id.btn_copyText);
 
         Intent intent = getIntent();
-        Note note = (Note) intent.getSerializableExtra("note");
+        note = (Note) intent.getSerializableExtra("note");
         viewNote_textVDate.setText(note.getDate());
         viewNote_textVText.setText(note.getText_note());
-        fileName = note.getPath_file();
 
-        startRecord.setOnClickListener(this);
+        btn_copyText.setOnClickListener(this);
+        btn_deleteNote.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /* Клик по кнопке "Прослушать" */
-            case R.id.startRecord:
-                try {
-                    if (fileName != null)
-                    releasePlayer();
-                    mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setDataSource(fileName);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            case R.id.btn_deleteNote:
+                Intent intent = new Intent();
+                intent.putExtra("delete_note", note);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+            case R.id.btn_copyText:
+                ClipboardManager _clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+                _clipboard.setText(viewNote_textVText.getText());
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Текст успешно скоппирован", Toast.LENGTH_LONG);
+                toast.show();
                 break;
             default:
                 break;
-        }
-    }
-
-    private void releasePlayer() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
         }
     }
 }

@@ -9,6 +9,6 @@
         android:orderInCategory="3" app:showAsAction="never" />
     <item android:id="@+id/app_name_export_import" android:title="@string/app_name_export_import"
         android:orderInCategory="4" app:showAsAction="never" />
-    <item android:id="@+id/app_exit" android:title="@string/app_exit"
-        android:orderInCategory="5" app:showAsAction="never" />
+    <!-- <item android:id="@+id/app_exit" android:title="@string/app_exit"
+        android:orderInCategory="5" app:showAsAction="never" /> -->
 </menu>

@@ -16,12 +16,18 @@
         <!-- Основное окно -->
         <string name="main_add_memo">Сделать заметку</string>
         <string name="main_search">Найти</string>
+        <string name="main_delete_note">Удалить</string>
 
         <!-- Окно Сделать запись -->
-        <string name="addNote_record">Идёт запись...</string>
+        <string name="addNote_record">Идёт запись: </string>
         <string name="addNote_save">Сохранить</string>
         <string name="addNote_cancel">Отменить</string>
         <string name="addNote_recognitionText">Пытаемся распознать текст...</string>
+        <string name="addNote_remember">Напомнить Вам?</string>
+        <string name="addNote_remember_30">через 30 минут</string>
+        <string name="addNote_remember_60">через 1 час</string>
+        <string name="addNote_remember_12">через 12 часов</string>
+        <string name="addNote_remember_24">через сутки</string>
 
         <!-- Окно просмотреть запись -->
         <string name="viewNote_copy">Коппировать текст заметки</string>

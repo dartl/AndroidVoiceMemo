@@ -4,6 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Размер таймера -->
-    <dimen name="time_size">32sp</dimen>
-    <dimen name="heading_size">24sp</dimen>
+    <dimen name="time_size">16sp</dimen>
+    <dimen name="heading_size">16sp</dimen>
 </resources>

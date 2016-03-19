@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,8 @@ public class AddNoteActivity extends MainActivity implements
     private Button btn_addNote_save;
     private Button btn_addNote_cancel;
     private TextView recognizeText;
+    private RadioGroup radioGroupRemember;
+    private Integer offsetTime;
 
     /* Пермененые, относящиеся к записи звука */
     private String fileName;
@@ -48,6 +53,7 @@ public class AddNoteActivity extends MainActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_note);
 
+        Toast toast;
         /* Начало записи звука */
         fileName = "unknown";
         if (isSpeechRecognitionActivityPresented(this)) {
@@ -59,7 +65,7 @@ public class AddNoteActivity extends MainActivity implements
             recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
             speech.startListening(recognizerIntent);
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(),
+            toast = Toast.makeText(getApplicationContext(),
                     "У вас не установлен голосовой поиск от Google. Для корректной " +
                             "работы установите его.", Toast.LENGTH_LONG);
             toast.show();
@@ -69,6 +75,28 @@ public class AddNoteActivity extends MainActivity implements
         timer = (Chronometer) findViewById(R.id.addNote_timer);
         timer.start();
 
+        /* радио групп */
+        radioGroupRemember = (RadioGroup) findViewById(R.id.radioGroupRemember);
+        radioGroupRemember.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioBtnRemember1:
+                        offsetTime = 30 * 60 * 1000;
+                        break;
+                    case R.id.radioBtnRemember2:
+                        offsetTime = 60 * 60 * 1000;
+                        break;
+                    case R.id.radioBtnRemember3:
+                        offsetTime = 12 * 60 * 60 * 1000;
+                        break;
+                    case R.id.radioBtnRemember4:
+                        offsetTime = 24 * 60 * 60 * 1000;
+                        break;
+                }
+            }
+        });
         /* Добавляем обработчики кликов */
         btn_addNote_save = (Button) findViewById(R.id.btn_addNote_save);
         btn_addNote_cancel = (Button) findViewById(R.id.btn_addNote_cancel);
@@ -94,6 +122,9 @@ public class AddNoteActivity extends MainActivity implements
                 Note note = new Note(-1, fileName, spokenText, dateString);
                 Intent intent = new Intent();
                 intent.putExtra("new_note", note);
+                if (offsetTime != null) {
+                    intent.putExtra("offsetTime", offsetTime);
+                }
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
@@ -114,6 +145,9 @@ public class AddNoteActivity extends MainActivity implements
 
     @Override
     public void onBeginningOfSpeech() {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Произнесите текст заметки", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
@@ -129,7 +163,10 @@ public class AddNoteActivity extends MainActivity implements
     @Override
     public void onEndOfSpeech() {
         timer.stop();
-        //speech.stopListening();
+        if (spokenText == null) {
+            spokenText = "Текст не удалось распознать";
+            recognizeText.setText(spokenText);
+        }
     }
 
     @Override
@@ -152,7 +189,9 @@ public class AddNoteActivity extends MainActivity implements
                 message = "Network timeout";
                 break;
             case SpeechRecognizer.ERROR_NO_MATCH:
-                message = "No match";
+                message = "Текст не удалось распознать";
+                spokenText = "Текст не удалось распознать";
+                recognizeText.setText(spokenText);
                 break;
             case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
                 message = "RecognitionService busy";
@@ -167,6 +206,7 @@ public class AddNoteActivity extends MainActivity implements
                 message = "Didn't understand, please try again.";
                 break;
         }
+
         Toast toast = Toast.makeText(getApplicationContext(),
                 message, Toast.LENGTH_SHORT);
         toast.show();
@@ -178,7 +218,11 @@ public class AddNoteActivity extends MainActivity implements
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         spokenText = matches.get(0);
         if (spokenText == null) {
-            spokenText = "Текст не удалось распознать!!!";
+            spokenText = "Текст не удалось распознать";
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Мы распознали текст, сохраните или отмените сохранение заметки", Toast.LENGTH_SHORT);
+            toast.show();
         }
         recognizeText.setText(spokenText);
         speech.cancel();

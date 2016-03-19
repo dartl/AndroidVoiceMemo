@@ -2,6 +2,8 @@ package com.androidvoicememo.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -23,9 +25,12 @@ public class CursorNoteAdapter extends SimpleCursorAdapter {
             text = text.substring(0, 100);
             text += "...";
         }
+
+
         super.setViewText(v, text);
         // если нужный нам TextView, то разрисовываем
     }
+
 /*
     @Override
     public void setViewImage(ImageView v, int value) {
