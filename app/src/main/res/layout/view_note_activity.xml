@@ -11,7 +11,8 @@
         android:id="@+id/viewNote_textVDate"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textStyle="italic" />
 
     <ScrollView
         android:layout_width="wrap_content"

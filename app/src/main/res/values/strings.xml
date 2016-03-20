@@ -17,6 +17,8 @@
         <string name="main_add_memo">Сделать заметку</string>
         <string name="main_search">Найти</string>
         <string name="main_delete_note">Удалить</string>
+        <string name="main_clear">Сброс</string>
+        <string name="main_searchPhrase">Поисковая фраза</string>
 
         <!-- Окно Сделать запись -->
         <string name="addNote_record">Идёт запись: </string>
@@ -32,4 +34,5 @@
         <!-- Окно просмотреть запись -->
         <string name="viewNote_copy">Коппировать текст заметки</string>
         <string name="viewNote_listen">Прослушать</string>
+
 </resources>

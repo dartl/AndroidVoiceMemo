@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,22 +28,28 @@ import com.androidvoicememo.model.Note;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
+    // указатели на элементы интерфейса
     private Button btn_show_AddNote;
     private ListView listViewNodes;
-    private Button deleteNote;
-    private Button btn_search;
-    private CursorNoteAdapter sAdapterNotes;
+    private Button btn_Search;
+    private Button btn_Search_Clear;
+    private EditText editText_SearchPhrase;
     // массив имен атрибутов, из которых будут читаться данные
     private String[] from = {SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE,
             SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE};
     // массив ID View-компонентов, в которые будут вставлять данные
     private int[] to = {R.id.textVNode_text, R.id.textVDate };
+    // Указатель на выборку заметок из БД
     private Cursor cursor_Notes;
-
+    private Cursor cursor_Notes_Search;
+    // Адаптер для добавления заметок в ListView
+    private CursorNoteAdapter sAdapterNotes;
+    // Константные коды завершения для добавления/удаления заметки
     private static final int ADD_NEW_NOTE = 400;
     private static final int VIEW_NOTE = 401;
-
+    // Указательна БД
     SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 SQLiteDBHelper.NOTES_TABLE_NAME, null);
         /* Подключение к БД - КОНЕЦ */
 
+        //
         listViewNodes = (ListView) findViewById(R.id.listViewNodes);
 
         /* Обработка события клика на элемент списка */
@@ -86,12 +95,22 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         /* Обработка событий клика */
         btn_show_AddNote = (Button) findViewById(R.id.btn_show_AddNote);
         btn_show_AddNote.setOnClickListener(this);
-        btn_search = (Button) findViewById(R.id.btn_Search);
-        btn_search.setOnClickListener(this);
+        btn_Search = (Button) findViewById(R.id.btn_Search);
+        btn_Search.setOnClickListener(this);
+        btn_Search_Clear = (Button) findViewById(R.id.btn_Search_Clear);
+        btn_Search_Clear.setOnClickListener(this);
+        editText_SearchPhrase = (EditText) findViewById(R.id.editText_SearchPhrase);
+        editText_SearchPhrase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((EditText) v).setText("");
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         switch (v.getId()) {
             /* Клик по кнопке "Добавить заметку" */
             case R.id.btn_show_AddNote:
@@ -99,6 +118,23 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 startActivityForResult(intent, ADD_NEW_NOTE);
                 break;
             case R.id.btn_Search:
+                String s = editText_SearchPhrase.getText().toString();
+                editText_SearchPhrase.clearFocus();
+
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                cursor_Notes_Search = db.rawQuery("SELECT * FROM " +
+                        SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (" +
+                                SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + " like '%" + s +"%')", null);
+
+                sAdapterNotes.changeCursor(cursor_Notes_Search);
+                break;
+            case R.id.btn_Search_Clear:
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                editText_SearchPhrase.setText(getResources().getText(R.string.main_searchPhrase));
+                cursor_Notes = db.rawQuery("SELECT * FROM " +
+                        SQLiteDBHelper.NOTES_TABLE_NAME, null);
+                sAdapterNotes.changeCursor(cursor_Notes);
                 break;
             default:
                 break;
@@ -120,14 +156,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         switch (id) {
             case R.id.app_name_addNote:
                 Intent intent = new Intent(this, AddNoteActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ADD_NEW_NOTE);
             break;
-            case R.id.app_name_searchNote:
+            /*case R.id.app_name_searchNote:
             break;
             case R.id.app_name_settings:
             break;
             case R.id.app_name_export_import:
-            break;
+            break;*/
             /*case R.id.app_exit:
             break;*/
         }

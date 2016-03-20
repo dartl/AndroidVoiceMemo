@@ -1,6 +1,5 @@
 package com.androidvoicememo.adapters;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-import com.androidvoicememo.MainActivity;
 import com.androidvoicememo.R;
 import com.androidvoicememo.ViewNoteActivity;
 import com.androidvoicememo.model.Note;

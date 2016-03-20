@@ -3,10 +3,7 @@ package com.androidvoicememo;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioFormat;
-import android.media.AudioRecord;
 import android.os.Bundle;
-import android.os.Environment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -14,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -40,6 +36,10 @@ public class AddNoteActivity extends MainActivity implements
     private TextView recognizeText;
     private RadioGroup radioGroupRemember;
     private Integer offsetTime;
+    private RadioButton radioBtnRemember1;
+    private RadioButton radioBtnRemember2;
+    private RadioButton radioBtnRemember3;
+    private RadioButton radioBtnRemember4;
 
     /* Пермененые, относящиеся к записи звука */
     private String fileName;
@@ -77,6 +77,16 @@ public class AddNoteActivity extends MainActivity implements
 
         /* радио групп */
         radioGroupRemember = (RadioGroup) findViewById(R.id.radioGroupRemember);
+        radioBtnRemember1 = (RadioButton) findViewById(R.id.radioBtnRemember1);
+        radioBtnRemember2= (RadioButton) findViewById(R.id.radioBtnRemember2);
+        radioBtnRemember3= (RadioButton) findViewById(R.id.radioBtnRemember3);
+        radioBtnRemember4= (RadioButton) findViewById(R.id.radioBtnRemember4);
+
+        radioBtnRemember1.setEnabled(false);
+        radioBtnRemember2.setEnabled(false);
+        radioBtnRemember3.setEnabled(false);
+        radioBtnRemember4.setEnabled(false);
+
         radioGroupRemember.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
@@ -166,6 +176,11 @@ public class AddNoteActivity extends MainActivity implements
         if (spokenText == null) {
             spokenText = "Текст не удалось распознать";
             recognizeText.setText(spokenText);
+        } else {
+            radioBtnRemember1.setEnabled(true);
+            radioBtnRemember2.setEnabled(true);
+            radioBtnRemember3.setEnabled(true);
+            radioBtnRemember4.setEnabled(true);
         }
     }
 

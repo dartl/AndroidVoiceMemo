@@ -42,6 +42,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize">
 
         </activity>
+
         <receiver android:name=".adapters.TimeNotification" />
     </application>
 </manifest>
