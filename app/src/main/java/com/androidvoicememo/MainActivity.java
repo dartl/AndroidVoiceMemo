@@ -65,8 +65,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             db = dbHelper.getReadableDatabase();
         }
 
-        cursor_Notes = db.rawQuery("SELECT * FROM " +
-                SQLiteDBHelper.NOTES_TABLE_NAME, null);
+        cursor_Notes = getAllNotes();
         /* Подключение к БД - КОНЕЦ */
 
         //
@@ -120,20 +119,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.btn_Search:
                 String s = editText_SearchPhrase.getText().toString();
                 editText_SearchPhrase.clearFocus();
+                s = s.toLowerCase();
 
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                 cursor_Notes_Search = db.rawQuery("SELECT * FROM " +
-                        SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (" +
-                                SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + " like '%" + s +"%')", null);
+                        SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (lower(" +
+                                SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + ") like '%" + s +"%') ORDER BY " +
+                        SQLiteDBHelper.NOTES_TABLE_COLUMN_ID + " DESC", null);
 
                 sAdapterNotes.changeCursor(cursor_Notes_Search);
                 break;
             case R.id.btn_Search_Clear:
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 editText_SearchPhrase.setText(getResources().getText(R.string.main_searchPhrase));
-                cursor_Notes = db.rawQuery("SELECT * FROM " +
-                        SQLiteDBHelper.NOTES_TABLE_NAME, null);
+                cursor_Notes = getAllNotes();
                 sAdapterNotes.changeCursor(cursor_Notes);
                 break;
             default:
@@ -151,13 +151,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        Intent intent;
         //события меню
         switch (id) {
             case R.id.app_name_addNote:
-                Intent intent = new Intent(this, AddNoteActivity.class);
+                intent = new Intent(this, AddNoteActivity.class);
                 startActivityForResult(intent, ADD_NEW_NOTE);
             break;
+            case R.id.app_name_reference:
+                intent = new Intent(this, ReferenceActivity.class);
+                startActivity(intent);
+                break;
             /*case R.id.app_name_searchNote:
             break;
             case R.id.app_name_settings:
@@ -183,8 +187,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE, new_note.getText_note());
                 newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE, new_note.getDate());
                 db.insert(SQLiteDBHelper.NOTES_TABLE_NAME, null, newValues);
-                cursor_Notes = db.rawQuery("SELECT * FROM " +
-                        SQLiteDBHelper.NOTES_TABLE_NAME, null);
+                cursor_Notes = getAllNotes();
                 sAdapterNotes.changeCursor(cursor_Notes);
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Заметка сохранена", Toast.LENGTH_SHORT);
@@ -201,8 +204,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Note delete_note = (Note) data.getSerializableExtra("delete_note");
             data.removeExtra("delete_note");
             int delCount = db.delete(SQLiteDBHelper.NOTES_TABLE_NAME, "_id = " + delete_note.getId(), null);
-            cursor_Notes = db.rawQuery("SELECT * FROM " +
-                    SQLiteDBHelper.NOTES_TABLE_NAME, null);
+            cursor_Notes = getAllNotes();
             sAdapterNotes.changeCursor(cursor_Notes);
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Запись удалена", Toast.LENGTH_SHORT);
@@ -222,5 +224,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         am.cancel(pendingIntent);
         // Устанавливаем разовое напоминание
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + offsetTime, pendingIntent);
+    }
+
+    private Cursor getAllNotes() {
+        return db.rawQuery("SELECT * FROM " +
+                SQLiteDBHelper.NOTES_TABLE_NAME + " ORDER BY " + SQLiteDBHelper.NOTES_TABLE_COLUMN_ID
+                + " DESC", null);
     }
 }

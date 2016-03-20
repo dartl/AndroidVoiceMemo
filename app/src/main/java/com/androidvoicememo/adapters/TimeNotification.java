@@ -6,6 +6,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import com.androidvoicememo.R;
@@ -26,9 +29,11 @@ public class TimeNotification extends BroadcastReceiver {
         //Интент для активити, которую мы хотим запускать при нажатии на уведомление
         Intent intentTL = new Intent(context, ViewNoteActivity.class);
         Note note = (Note) intent.getSerializableExtra("note");
+        Resources res = context.getResources();
         intentTL.putExtra("note", note);
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.icon175x175)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.icon175x175))
                 .setAutoCancel(true) //уведомление закроется по клику на него
                 .setTicker("Уведомление о заметке") //текст, который отобразится вверху статус-бара при создании уведомления
                 .setContentText(note.getText_note()) // Основной текст уведомления

@@ -239,6 +239,7 @@ public class AddNoteActivity extends MainActivity implements
                     "Мы распознали текст, сохраните или отмените сохранение заметки", Toast.LENGTH_SHORT);
             toast.show();
         }
+        spokenText = spokenText.toLowerCase();
         recognizeText.setText(spokenText);
         speech.cancel();
         speech.destroy();
