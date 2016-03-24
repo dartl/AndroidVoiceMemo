@@ -63,4 +63,12 @@
         <string name="reference_CopyNote_header">Скоппировать текст заметки</string>
         <string name="reference_CopyNote_body">Для того, чтобы скоппировать полный текст заметки,
             зайдите в полное описание заметки и нажминте на кнопку "Коппировать текст заметки"</string>
+
+        <!-- Окно импорт/экспорт -->
+        <string name="export_import_Import">Импорт</string>
+        <string name="export_import_Export">Экспорт</string>
+        <string name="export_import_ExportAction">Экспортировать</string>
+        <string name="export_import_ImportAction">Импортировать</string>
+        <string name="export_import_NamingFile">Название файла:</string>
+        <string name="export_import_SelectFile">Выбрать файл</string>
 </resources>

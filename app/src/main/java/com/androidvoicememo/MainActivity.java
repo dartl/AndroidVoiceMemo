@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     // Константные коды завершения для добавления/удаления заметки
     private static final int ADD_NEW_NOTE = 400;
     private static final int VIEW_NOTE = 401;
+    private static final int EXPORT_NOTE = 402;
     // Указательна БД
     SQLiteDatabase db;
 
@@ -165,9 +166,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             /*case R.id.app_name_searchNote:
             break;
             case R.id.app_name_settings:
-            break;
-            case R.id.app_name_export_import:
             break;*/
+            case R.id.app_name_export_import:
+                intent = new Intent(this, ImportExportActivity.class);
+                startActivityForResult(intent, EXPORT_NOTE);
+            break;
             /*case R.id.app_exit:
             break;*/
         }
@@ -209,6 +212,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Запись удалена", Toast.LENGTH_SHORT);
             toast.show();
+        } else if (requestCode == EXPORT_NOTE) {
+            cursor_Notes = getAllNotes();
+            sAdapterNotes.changeCursor(cursor_Notes);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -230,5 +236,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return db.rawQuery("SELECT * FROM " +
                 SQLiteDBHelper.NOTES_TABLE_NAME + " ORDER BY " + SQLiteDBHelper.NOTES_TABLE_COLUMN_ID
                 + " DESC", null);
+    }
+
+    @Override
+    public void onDestroy(){
+        // Очистите все ресурсы. Это касается завершения работы
+        // потоков, закрытия соединений с базой данных и т. д.
+        if (db.isOpen()) {
+            db.close();
+        }
+        super.onDestroy();
     }
 }

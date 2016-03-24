@@ -116,11 +116,6 @@ public class AddNoteActivity extends MainActivity implements
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             /* Клик по кнопке "Сохранить" */

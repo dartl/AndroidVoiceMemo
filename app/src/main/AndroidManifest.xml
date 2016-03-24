@@ -47,6 +47,12 @@
 
         </activity>
 
+        <activity android:name=".ImportExportActivity"
+            android:label="@string/app_name_addNote"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
         <receiver android:name=".adapters.TimeNotification" />
     </application>
 </manifest>
