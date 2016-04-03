@@ -1,6 +1,7 @@
 package com.androidvoicememo;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,14 +11,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidvoicememo.adapters.CursorNoteAdapter;
@@ -33,6 +40,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private ListView listViewNodes;
     private Button btn_Search;
     private Button btn_Search_Clear;
+    private ImageButton imageButtonCancelSearch;
     private EditText editText_SearchPhrase;
     // массив имен атрибутов, из которых будут читаться данные
     private String[] from = {SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE,
@@ -50,6 +58,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private static final int EXPORT_NOTE = 402;
     // Указательна БД
     SQLiteDatabase db;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        editText_SearchPhrase.setText(getResources().getText(R.string.main_searchPhrase));
+        cursor_Notes = getAllNotes();
+        sAdapterNotes.changeCursor(cursor_Notes);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +113,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         /* Обработка событий клика */
         btn_show_AddNote = (Button) findViewById(R.id.btn_show_AddNote);
         btn_show_AddNote.setOnClickListener(this);
-        btn_Search = (Button) findViewById(R.id.btn_Search);
-        btn_Search.setOnClickListener(this);
-        btn_Search_Clear = (Button) findViewById(R.id.btn_Search_Clear);
-        btn_Search_Clear.setOnClickListener(this);
+        imageButtonCancelSearch = (ImageButton) findViewById(R.id.imageButtonCancelSearch);;
+        imageButtonCancelSearch.setOnClickListener(this);
+
         editText_SearchPhrase = (EditText) findViewById(R.id.editText_SearchPhrase);
         editText_SearchPhrase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,32 +123,60 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 ((EditText) v).setText("");
             }
         });
+
+        editText_SearchPhrase.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    EditText eText = (EditText) v;
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (eText.getText().toString().length() == 0) {
+                        eText.setText(getResources().getText(R.string.main_searchPhrase));
+                        cursor_Notes = getAllNotes();
+                        sAdapterNotes.changeCursor(cursor_Notes);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+        editText_SearchPhrase.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String str = s.toString();
+                str.toLowerCase();
+
+                cursor_Notes_Search = db.rawQuery("SELECT * FROM " +
+                        SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (lower(" +
+                        SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + ") like '%" + s +"%') ORDER BY " +
+                        SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE + " DESC", null);
+
+                sAdapterNotes.changeCursor(cursor_Notes_Search);
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         switch (v.getId()) {
             /* Клик по кнопке "Добавить заметку" */
             case R.id.btn_show_AddNote:
                 Intent intent = new Intent(this, AddNoteActivity.class);
                 startActivityForResult(intent, ADD_NEW_NOTE);
                 break;
-            case R.id.btn_Search:
-                String s = editText_SearchPhrase.getText().toString();
-                editText_SearchPhrase.clearFocus();
-                s = s.toLowerCase();
-
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-                cursor_Notes_Search = db.rawQuery("SELECT * FROM " +
-                        SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (lower(" +
-                                SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + ") like '%" + s +"%') ORDER BY " +
-                        SQLiteDBHelper.NOTES_TABLE_COLUMN_ID + " DESC", null);
-
-                sAdapterNotes.changeCursor(cursor_Notes_Search);
-                break;
-            case R.id.btn_Search_Clear:
+            case R.id.imageButtonCancelSearch:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 editText_SearchPhrase.setText(getResources().getText(R.string.main_searchPhrase));
                 cursor_Notes = getAllNotes();
@@ -207,6 +252,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Note delete_note = (Note) data.getSerializableExtra("delete_note");
             data.removeExtra("delete_note");
             int delCount = db.delete(SQLiteDBHelper.NOTES_TABLE_NAME, "_id = " + delete_note.getId(), null);
+            NotificationManager nm = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.cancel(TimeNotification.NOTIFY_TAG,delete_note.getId());
             cursor_Notes = getAllNotes();
             sAdapterNotes.changeCursor(cursor_Notes);
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -234,7 +281,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private Cursor getAllNotes() {
         return db.rawQuery("SELECT * FROM " +
-                SQLiteDBHelper.NOTES_TABLE_NAME + " ORDER BY " + SQLiteDBHelper.NOTES_TABLE_COLUMN_ID
+                SQLiteDBHelper.NOTES_TABLE_NAME + " ORDER BY " + SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE
                 + " DESC", null);
     }
 

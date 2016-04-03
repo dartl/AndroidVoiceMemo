@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidvoicememo.adapters.OpenFileDialog;
@@ -22,6 +23,7 @@ public class ImportExportActivity extends MainActivity {
     private Button btn_Export;
     private Button btn_SelectFile;
     private Button btn_Import;
+    private TextView textView_SelectFile;
     private String fileExportName;
     private EditText editText_SelectFile;
     private SQLiteDBHelper dbHelper;
@@ -46,6 +48,7 @@ public class ImportExportActivity extends MainActivity {
         }
 
         editText_SelectFile = (EditText) findViewById(R.id.editText_SelectFile);
+        textView_SelectFile = (TextView) findViewById(R.id.textView_SelectFile);
 
         btn_Export = (Button) findViewById(R.id.btn_Export);
         btn_SelectFile = (Button) findViewById(R.id.btn_SelectFile);
@@ -53,6 +56,8 @@ public class ImportExportActivity extends MainActivity {
         btn_Import.setOnClickListener(this);
         btn_SelectFile.setOnClickListener(this);
         btn_Export.setOnClickListener(this);
+
+        btn_Import.setEnabled(false);
     }
 
     @Override
@@ -81,6 +86,8 @@ public class ImportExportActivity extends MainActivity {
                             @Override
                             public void OnSelectedFile(String fileName) {
                                 importFileName = fileName;
+                                textView_SelectFile.setText("Был выбран файл :" + importFileName);
+                                btn_Import.setEnabled(true);
                                 //Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
                             }
                         });

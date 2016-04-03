@@ -20,7 +20,7 @@ import com.androidvoicememo.model.Note;
  */
 public class TimeNotification extends BroadcastReceiver {
     private static final int NOTIFY_CODE = 101;
-    private static final String NOTIFY_TAG = "VOICE_NOTE";
+    public static final String NOTIFY_TAG = "VOICE_NOTE";
 
     NotificationManager nm;
     @Override

@@ -29,8 +29,6 @@ import java.util.List;
 public class AddNoteActivity extends MainActivity implements
         RecognitionListener {
 
-    public static final String DIRECTORY = "/VoiceNotes/";
-    private Chronometer timer;
     private Button btn_addNote_save;
     private Button btn_addNote_cancel;
     private TextView recognizeText;
@@ -70,11 +68,6 @@ public class AddNoteActivity extends MainActivity implements
                             "работы установите его.", Toast.LENGTH_LONG);
             toast.show();
         }
-
-        /* Запускаем таймер */
-        timer = (Chronometer) findViewById(R.id.addNote_timer);
-        timer.start();
-
         /* радио групп */
         radioGroupRemember = (RadioGroup) findViewById(R.id.radioGroupRemember);
         radioBtnRemember1 = (RadioButton) findViewById(R.id.radioBtnRemember1);
@@ -145,14 +138,12 @@ public class AddNoteActivity extends MainActivity implements
 
     @Override
     public void onReadyForSpeech(Bundle params) {
-
+        recognizeText.setText(getResources().getText(R.string.addNote_recognitionText));
     }
 
     @Override
     public void onBeginningOfSpeech() {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Произнесите текст заметки", Toast.LENGTH_SHORT);
-        toast.show();
+
     }
 
     @Override
@@ -167,7 +158,6 @@ public class AddNoteActivity extends MainActivity implements
 
     @Override
     public void onEndOfSpeech() {
-        timer.stop();
         if (spokenText == null) {
             spokenText = "Текст не удалось распознать";
             recognizeText.setText(spokenText);

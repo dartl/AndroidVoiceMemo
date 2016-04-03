@@ -1,9 +1,18 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">14dp</dimen>
+    <dimen name="activity_vertical_margin">14dp</dimen>
 
-    <!-- Размер таймера -->
-    <dimen name="time_size">16sp</dimen>
-    <dimen name="heading_size">16sp</dimen>
+    <!-- Размеры окно просмотра -->
+    <dimen name="viewNote_heading_size">16sp</dimen>
+    <dimen name="viewNote_body_size">24sp</dimen>
+
+    <!-- Размеры основное окно -->
+    <dimen name="main_heading_size">24sp</dimen>
+
+    <!-- Размеры окно добавления заметки -->
+    <dimen name="addNote_body_size">18sp</dimen>
+    <dimen name="addNote_heading_size">24sp</dimen>
+    <dimen name="addNote_button_padding">12dp</dimen>
+    <dimen name="addNote_heading_top_margin">24dp</dimen>
 </resources>

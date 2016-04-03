@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.androidvoicememo.R;
+
 /**
  * Created by Dartl on 03.03.2016.
  */
@@ -25,7 +27,10 @@ public class CursorNoteAdapter extends SimpleCursorAdapter {
             text = text.substring(0, 100);
             text += "...";
         }
+        /*if (v.getId() == R.id.){
 
+        }
+*/
 
         super.setViewText(v, text);
         // если нужный нам TextView, то разрисовываем

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -9,16 +14,16 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Date"
         android:id="@+id/viewNote_textVDate"
-        android:layout_alignParentTop="true"
+        android:textStyle="italic"
+        android:layout_below="@+id/btn_copyText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textStyle="italic" />
+        android:layout_alignParentStart="true" />
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:layout_below="@+id/btn_copyText"
+        android:layout_below="@+id/viewNote_textVDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -30,9 +35,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Text"
             android:id="@+id/viewNote_textVText"
+            android:textIsSelectable="true"
             android:layout_alignTop="@+id/scrollView"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textSize="@dimen/viewNote_body_size" />
     </ScrollView>
 
     <Button
@@ -41,7 +48,8 @@
         android:layout_height="wrap_content"
         android:text="@string/viewNote_copy"
         android:id="@+id/btn_copyText"
-        android:layout_below="@+id/viewNote_textVDate"
+        android:textSize="@dimen/viewNote_heading_size"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -51,7 +59,8 @@
         android:layout_height="wrap_content"
         android:text="@string/main_delete_note"
         android:id="@+id/btn_deleteNote"
-        android:layout_above="@+id/scrollView"
+        android:textSize="@dimen/viewNote_heading_size"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
