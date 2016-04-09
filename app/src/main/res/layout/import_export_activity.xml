@@ -46,7 +46,8 @@
                 android:id="@+id/editText_SelectFile"
                 android:layout_alignTop="@+id/textView14"
                 android:layout_toRightOf="@+id/textView14"
-                android:layout_toEndOf="@+id/textView14" />
+                android:layout_toEndOf="@+id/textView14"
+                android:lines="1" />
 
             <Button
                 android:layout_width="wrap_content"

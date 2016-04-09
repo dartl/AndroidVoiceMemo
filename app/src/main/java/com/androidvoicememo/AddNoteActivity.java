@@ -174,7 +174,7 @@ public class AddNoteActivity extends MainActivity implements
         String message;
         switch (error) {
             case SpeechRecognizer.ERROR_AUDIO:
-                message = "Audio recording error";
+                message = "Ошибка записи звука с микрофона";
                 break;
             case SpeechRecognizer.ERROR_CLIENT:
                 message = "Client side error";
@@ -183,7 +183,7 @@ public class AddNoteActivity extends MainActivity implements
                 message = "Insufficient permissions";
                 break;
             case SpeechRecognizer.ERROR_NETWORK:
-                message = "Network error";
+                message = "Ошибка подключения к интернету";
                 break;
             case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
                 message = "Network timeout";
@@ -197,13 +197,13 @@ public class AddNoteActivity extends MainActivity implements
                 message = "RecognitionService busy";
                 break;
             case SpeechRecognizer.ERROR_SERVER:
-                message = "error from server";
+                message = "Ошибка на стороне сервера";
                 break;
             case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                message = "No speech input";
+                message = "Нет речи для распознования";
                 break;
             default:
-                message = "Didn't understand, please try again.";
+                message = "Не удалось распознать текст";
                 break;
         }
 

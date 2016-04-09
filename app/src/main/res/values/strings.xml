@@ -11,10 +11,6 @@
 
 
     <!-- Остальное -->
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-        <!-- Основное окно -->
         <string name="main_add_memo">Сделать заметку</string>
         <string name="main_delete_note">Удалить</string>
         <string name="main_searchPhrase">Поисковая фраза</string>

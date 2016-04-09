@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Voice notes</string>
+    <string name="addNote_cancel"></string>
+    <string name="action_settings">пра</string>
+    <string name="addNote_save">Save</string>
+</resources>

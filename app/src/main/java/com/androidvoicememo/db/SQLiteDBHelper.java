@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.JsonReader;
+import android.widget.Toast;
 
 import com.androidvoicememo.model.Note;
 
@@ -77,10 +78,14 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                         objNote=(JSONObject)array.get(i);
                         textNote = objNote.getString(NOTES_TABLE_COLUMN_TEXT_NOTE);
                         date = objNote.getString(NOTES_TABLE_COLUMN_DATE);
-                        ContentValues newValues = new ContentValues();
-                        newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE, textNote);
-                        newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE, date);
-                        db.insert(SQLiteDBHelper.NOTES_TABLE_NAME, null, newValues);
+                        if (textNote != null && date != null) {
+                            ContentValues newValues = new ContentValues();
+                            newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE, textNote);
+                            newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE, date);
+                            db.insert(SQLiteDBHelper.NOTES_TABLE_NAME, null, newValues);
+                        } else {
+                            return false;
+                        }
                     }
                 }
             } catch (JSONException e) {

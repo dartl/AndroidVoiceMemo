@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +58,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private static final int VIEW_NOTE = 401;
     private static final int EXPORT_NOTE = 402;
     // Указательна БД
-    SQLiteDatabase db;
+    protected SQLiteDatabase db;
+    private float MOVE_LENGTH = 50;
 
 
     @Override
@@ -158,7 +160,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
                 cursor_Notes_Search = db.rawQuery("SELECT * FROM " +
                         SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (lower(" +
-                        SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + ") like '%" + s +"%') ORDER BY " +
+                        SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + ") like '%" + s + "%') ORDER BY " +
                         SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE + " DESC", null);
 
                 sAdapterNotes.changeCursor(cursor_Notes_Search);
@@ -294,4 +296,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
         super.onDestroy();
     }
+
+
 }

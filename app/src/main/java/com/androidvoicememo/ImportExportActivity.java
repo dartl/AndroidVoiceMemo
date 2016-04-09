@@ -99,6 +99,11 @@ public class ImportExportActivity extends MainActivity {
                             "Импорт произошел успешно", Toast.LENGTH_SHORT);
                     toast.show();
                     isImport = true;
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Импорт не удалось произвести, не корректная структура файла", Toast.LENGTH_SHORT);
+                    toast.show();
+                    isImport = true;
                 }
                 break;
             default:
