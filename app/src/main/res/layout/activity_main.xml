@@ -13,8 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/main_heading_size"
-        android:paddingTop="@dimen/main_padding_button"
-        android:paddingBottom="@dimen/main_padding_button" />
+        style="@style/gawk_style_button_invers"
+        android:backgroundTintMode="src_in" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -28,7 +28,8 @@
         android:singleLine="true"
         android:imeOptions="actionSearch"
         android:text="@string/main_searchPhrase"
-        android:paddingRight="30dp">
+        android:paddingRight="30dp"
+        android:translationZ="50dp">
         <requestFocus />
     </EditText>
 

@@ -1,6 +1,7 @@
 package com.androidvoicememo;
 
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -75,7 +76,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         /* Тестовое подключение к БД */
         SQLiteDBHelper dbHelper = new SQLiteDBHelper(this);
 

@@ -3,6 +3,38 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="gawk_style_button">
+        <item name="android:background">@drawable/button_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="gawk_style_button_red">
+        <item name="android:background">@drawable/button_red_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="gawk_style_button_invers">
+        <item name="android:background">@drawable/button_invers_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="gawk_style_button_gray">
+        <item name="android:background">@drawable/button_gray_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+    </style>
+
+    <style name="gawk_style_date">
+        <item name="android:drawableLeft">@drawable/icon_time</item>
     </style>
 
 </resources>

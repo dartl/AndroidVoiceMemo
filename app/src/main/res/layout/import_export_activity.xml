@@ -47,7 +47,9 @@
                 android:layout_alignTop="@+id/textView14"
                 android:layout_toRightOf="@+id/textView14"
                 android:layout_toEndOf="@+id/textView14"
-                android:lines="1" />
+                android:lines="1"
+                android:maxLines="1"
+                android:inputType="text" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -55,7 +57,8 @@
                 android:text="@string/export_import_ExportAction"
                 android:id="@+id/btn_Export"
                 android:layout_below="@+id/editText_SelectFile"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                style="@style/gawk_style_button_invers" />
 
         </RelativeLayout>
 
@@ -86,7 +89,8 @@
                     android:text="@string/export_import_SelectFile"
                     android:id="@+id/btn_SelectFile"
                     android:layout_below="@+id/textView15"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"
+                    style="@style/gawk_style_button_gray" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -95,7 +99,8 @@
                     android:id="@+id/btn_Import"
                     android:layout_below="@+id/textView_SelectFile"
                     android:layout_centerHorizontal="true"
-                    android:enabled="true" />
+                    android:enabled="true"
+                    style="@style/gawk_style_button_invers" />
 
                 <TextView
                     android:layout_width="wrap_content"

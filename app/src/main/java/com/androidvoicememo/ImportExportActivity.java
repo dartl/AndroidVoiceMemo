@@ -1,10 +1,13 @@
 package com.androidvoicememo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,6 +61,16 @@ public class ImportExportActivity extends MainActivity {
         btn_Export.setOnClickListener(this);
 
         btn_Import.setEnabled(false);
+        editText_SelectFile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -66,18 +79,27 @@ public class ImportExportActivity extends MainActivity {
             /* Клик по кнопке "Экспортировать" */
             case R.id.btn_Export:
                 fileExportName = editText_SelectFile.getText().toString();
-                File file = new File(Environment.getExternalStorageDirectory()+"/",fileExportName+".json");
-                try {
-                    if (file.createNewFile()) {
-                        if (dbHelper.exportDB(file,db)) {
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    "Экспорт успешен. Файл находится вот тут: " + file.getAbsolutePath(), Toast.LENGTH_LONG);
-                            toast.show();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                if (fileExportName.length() > 0) {
+                    File file = new File(Environment.getExternalStorageDirectory()+"/",fileExportName+".json");
+                    try {
+                        if (file.createNewFile()) {
+                            if (dbHelper.exportDB(file,db)) {
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        "Экспорт успешен. Файл находится вот тут: " + file.getAbsolutePath(), Toast.LENGTH_LONG);
+                                toast.show();
+                            }
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Для экспорта введите название будущего файла", Toast.LENGTH_LONG);
+                    toast.show();
                 }
+
                 break;
             case R.id.btn_SelectFile:
                 fileDialog = new OpenFileDialog(this)

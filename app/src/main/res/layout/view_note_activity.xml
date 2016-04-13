@@ -16,7 +16,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:paddingRight="@dimen/viewNote_padding"
-        android:paddingLeft="@dimen/viewNote_padding" />
+        android:paddingLeft="@dimen/viewNote_padding"
+        style="@style/gawk_style_date" />
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -44,7 +45,6 @@
     </ScrollView>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/viewNote_copy"
@@ -52,10 +52,11 @@
         android:textSize="@dimen/viewNote_heading_size"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        style="@style/gawk_style_button_gray" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
+        style="@style/gawk_style_button_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_delete_note"

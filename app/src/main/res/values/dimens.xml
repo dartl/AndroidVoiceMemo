@@ -16,7 +16,8 @@
     <!-- Размеры окно добавления заметки -->
     <dimen name="addNote_body_size">18sp</dimen>
     <dimen name="addNote_heading_size">24sp</dimen>
-    <dimen name="addNote_button_padding">18dp</dimen>
+    <dimen name="addNote_button_padding">22dp</dimen>
+    <dimen name="addNote_button_paddingTop">18dp</dimen>
     <dimen name="addNote_heading_top_margin">24dp</dimen>
     <dimen name="addNote_padding">6dp</dimen>
 </resources>
