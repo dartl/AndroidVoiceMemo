@@ -40,6 +40,9 @@
 
     <style name="gawk_style_date">
         <item name="android:drawableLeft">@drawable/icon_time</item>
+        <item name="android:textColor">@color/dateColor</item>
+        <item name="android:textStyle">italic</item>
     </style>
+
 
 </resources>

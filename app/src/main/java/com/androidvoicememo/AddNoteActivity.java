@@ -1,30 +1,29 @@
 package com.androidvoicememo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.*;
-
-import com.androidvoicememo.db.SQLiteDBHelper;
 import com.androidvoicememo.model.Note;
 
 import java.text.SimpleDateFormat;
@@ -48,8 +47,9 @@ public class AddNoteActivity extends MainActivity implements
     private RadioButton radioBtnRemember4;
 
     /* Пермененые, относящиеся к записи звука */
-    private String fileName;
     private String spokenText = "Текст не удалось распознать";
+    AlertDialog aDialog;        /* Переменная для проверки показывается ли окно ошибки onError()
+                                для speechRecignizer */
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
@@ -59,23 +59,14 @@ public class AddNoteActivity extends MainActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_note);
 
-        Toast toast;
         /* Начало записи звука */
-        fileName = "unknown";
-        if (isSpeechRecognitionActivityPresented(this)) {
-            speech = SpeechRecognizer.createSpeechRecognizer(this);
-            speech.setRecognitionListener(this);
-            recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-            speech.startListening(recognizerIntent);
-        } else {
-            toast = Toast.makeText(getApplicationContext(),
-                    "У вас не установлен голосовой поиск от Google. Для корректной " +
-                            "работы установите его.", Toast.LENGTH_LONG);
-            toast.show();
-        }
+
+        /* Инициализируем окно для ошибки, чтобы не было NullPointerExeption */
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        aDialog = dialog.create();
+
+        textRecognizer();
+
         /* радио групп */
         radioGroupRemember = (RadioGroup) findViewById(R.id.radioGroupRemember);
         radioBtnRemember1 = (RadioButton) findViewById(R.id.radioBtnRemember1);
@@ -144,7 +135,7 @@ public class AddNoteActivity extends MainActivity implements
                 long date = System.currentTimeMillis();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy k:mm");
                 String dateString = dateFormat.format(date);
-                Note note = new Note(-1, fileName, spokenText, dateString);
+                Note note = new Note(-1, "", spokenText, dateString);
                 Intent intent = new Intent();
                 intent.putExtra("new_note", note);
                 if (offsetTime != null) {
@@ -199,6 +190,7 @@ public class AddNoteActivity extends MainActivity implements
     @Override
     public void onError(int error) {
         String message;
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         switch (error) {
             case SpeechRecognizer.ERROR_AUDIO:
                 message = "Ошибка записи звука с микрофона";
@@ -210,33 +202,42 @@ public class AddNoteActivity extends MainActivity implements
                 message = "Insufficient permissions";
                 break;
             case SpeechRecognizer.ERROR_NETWORK:
-                message = "Ошибка подключения к интернету";
+                message = "Ошибка подключения к интернету. Проверьте подключение к интернету и попробуйте снова.";
                 break;
             case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
                 message = "Network timeout";
                 break;
+            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
             case SpeechRecognizer.ERROR_NO_MATCH:
                 message = "Текст не удалось распознать";
                 spokenText = "Текст не удалось распознать";
                 recognizeText.setText(spokenText);
+                dialog.setPositiveButton("Попробовать снова", new DialogInterface.OnClickListener() {    // положительная кнопка
+
+                    // обработчик нажатия на кнопку Установить
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        textRecognizer();
+                    }
+                });
                 break;
             case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                message = "RecognitionService busy";
+                message = "Сервер распознования речи на данный момент занят, попробуйте пойзже.";
                 break;
             case SpeechRecognizer.ERROR_SERVER:
-                message = "Ошибка на стороне сервера";
-                break;
-            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                message = "Нет речи для распознования";
+                message = "Ошибка на стороне сервера. Проверьте подключение к интернету и попробуйте снова.";
                 break;
             default:
                 message = "Не удалось распознать текст";
                 break;
         }
 
-        Toast toast = Toast.makeText(getApplicationContext(),
-                message, Toast.LENGTH_SHORT);
-        toast.show();
+        dialog.setMessage(message)	// сообщение
+                .setTitle("Внимание");
+        if(!aDialog.isShowing()) {
+            aDialog = dialog.show();
+        }
+
     }
 
     @Override
@@ -254,7 +255,9 @@ public class AddNoteActivity extends MainActivity implements
         }
         spokenText = spokenText.toLowerCase();
         recognizeText.setText(spokenText);
+        /* включаем неактивные кнопку Сохранить и распознанный текст */
         recognizeText.setEnabled(true);
+        btn_addNote_save.setEnabled(true);
         speech.cancel();
         speech.destroy();
     }
@@ -289,5 +292,85 @@ public class AddNoteActivity extends MainActivity implements
         }
 
         return false; // we have no activities to recognize the speech
+    }
+
+    private static void installGoogleVoiceSearch(final Activity ownerActivity) {
+
+        // создаем диалог, который спросит у пользователя хочет ли он
+        // установить Голосовой Поиск
+        Dialog dialog = new AlertDialog.Builder(ownerActivity)
+                .setMessage("Для распознавания речи необходимо установить приложение \"Google\" с функцией голосового поиска.")	// сообщение
+                .setTitle("Внимание")	// заголовок диалога
+                .setPositiveButton("Установить", new DialogInterface.OnClickListener() {    // положительная кнопка
+
+                    // обработчик нажатия на кнопку Установить
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            // создаем Intent для открытия в маркете странички с приложением
+                            // Голосовой Поиск имя пакета: com.google.android.voicesearch
+                            //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.googlequicksearchbox"));
+                            // настраиваем флаги, чтобы маркет не попал к в историю нашего приложения (стек Activity)
+                            //intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                            // отправляем Intent
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("market://details?id=com.google.android.googlequicksearchbox"));
+                            ownerActivity.startActivity(intent);
+                        } catch (Exception ex) {
+
+                        }
+                    }
+                })
+
+                .setNegativeButton("Отмена", null)	// негативная кнопка
+                .create();
+
+        dialog.show();	// показываем диалог
+    }
+
+    public static boolean hasConnection(final Context context)
+    {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        wifiInfo = cm.getActiveNetworkInfo();
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void textRecognizer() {
+        if (isSpeechRecognitionActivityPresented(this)) {
+            if (speech == null) {
+                speech = SpeechRecognizer.createSpeechRecognizer(this);
+                speech.setRecognitionListener(this);
+                recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+                speech.startListening(recognizerIntent);
+            } else {
+                speech.startListening(recognizerIntent);
+            }
+        } else {
+            if (hasConnection(this)) {
+                installGoogleVoiceSearch(AddNoteActivity.this);
+            } else {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.
+                        setMessage("У вас отсутствует подключение к интернету, включите его и попробуйте снова.").
+                        setTitle("Внимание");
+            }
+        }
     }
 }

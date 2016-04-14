@@ -15,7 +15,8 @@
         android:textSize="@dimen/addNote_heading_size"
         android:paddingBottom="@dimen/addNote_button_padding"
         android:nestedScrollingEnabled="false"
-        style="@style/gawk_style_button" />
+        style="@style/gawk_style_button"
+        android:enabled="false" />
 
     <Button
         android:layout_width="wrap_content"

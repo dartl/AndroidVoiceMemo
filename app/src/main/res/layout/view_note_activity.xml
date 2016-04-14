@@ -29,7 +29,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:paddingRight="@dimen/viewNote_padding"
-        android:paddingLeft="@dimen/viewNote_padding">
+        android:paddingLeft="@dimen/viewNote_padding"
+        android:paddingTop="@dimen/viewNote_padding">
 
         <TextView
             android:layout_width="wrap_content"
