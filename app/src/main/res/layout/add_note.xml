@@ -106,8 +106,8 @@
                 android:textSize="@dimen/addNote_body_size" />
         </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/addNote_ready"
@@ -118,7 +118,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:textSize="@dimen/addNote_body_size"
-            android:layout_marginTop="@dimen/addNote_heading_top_margin" />
+            android:layout_marginTop="@dimen/addNote_heading_top_margin"
+            android:autoText="false"
+            android:background="@android:color/transparent"
+            android:enabled="false"
+            ><requestFocus /></EditText>
     </LinearLayout>
 
 </RelativeLayout>

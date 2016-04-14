@@ -1,22 +1,30 @@
 package com.androidvoicememo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.*;
+
+import com.androidvoicememo.db.SQLiteDBHelper;
 import com.androidvoicememo.model.Note;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +39,7 @@ public class AddNoteActivity extends MainActivity implements
 
     private Button btn_addNote_save;
     private Button btn_addNote_cancel;
-    private TextView recognizeText;
+    private EditText recognizeText;
     private RadioGroup radioGroupRemember;
     private Integer offsetTime;
     private RadioButton radioBtnRemember1;
@@ -103,9 +111,28 @@ public class AddNoteActivity extends MainActivity implements
         /* Добавляем обработчики кликов */
         btn_addNote_save = (Button) findViewById(R.id.btn_addNote_save);
         btn_addNote_cancel = (Button) findViewById(R.id.btn_addNote_cancel);
-        recognizeText = (TextView) findViewById(R.id.recognizeText);
+        recognizeText = (EditText) findViewById(R.id.recognizeText);
         btn_addNote_save.setOnClickListener(this);
         btn_addNote_cancel.setOnClickListener(this);
+        recognizeText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String str = s.toString();
+                str.toLowerCase();
+                spokenText = str;
+            }
+        });
+        
     }
 
     @Override
@@ -217,6 +244,7 @@ public class AddNoteActivity extends MainActivity implements
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         spokenText = matches.get(0);
+
         if (spokenText == null) {
             spokenText = "Текст не удалось распознать";
         } else {
@@ -226,6 +254,7 @@ public class AddNoteActivity extends MainActivity implements
         }
         spokenText = spokenText.toLowerCase();
         recognizeText.setText(spokenText);
+        recognizeText.setEnabled(true);
         speech.cancel();
         speech.destroy();
     }
