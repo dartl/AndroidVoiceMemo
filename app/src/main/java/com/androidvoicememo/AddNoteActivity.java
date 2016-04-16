@@ -3,6 +3,7 @@ package com.androidvoicememo;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,14 +21,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidvoicememo.adapters.DatePickerFragment;
 import com.androidvoicememo.model.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,16 +45,17 @@ public class AddNoteActivity extends MainActivity implements
     private Button btn_addNote_cancel;
     private EditText recognizeText;
     private RadioGroup radioGroupRemember;
-    private Integer offsetTime;
+    private long offsetTime = -1;
     private RadioButton radioBtnRemember1;
     private RadioButton radioBtnRemember2;
     private RadioButton radioBtnRemember3;
     private RadioButton radioBtnRemember4;
+    private RadioButton radioBtnRemember5;
 
     /* Пермененые, относящиеся к записи звука */
     private String spokenText = "Текст не удалось распознать";
-    AlertDialog aDialog;        /* Переменная для проверки показывается ли окно ошибки onError()
-                                для speechRecignizer */
+    AlertDialog aDialog;
+    DialogFragment newFragment;
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
@@ -73,11 +79,13 @@ public class AddNoteActivity extends MainActivity implements
         radioBtnRemember2= (RadioButton) findViewById(R.id.radioBtnRemember2);
         radioBtnRemember3= (RadioButton) findViewById(R.id.radioBtnRemember3);
         radioBtnRemember4= (RadioButton) findViewById(R.id.radioBtnRemember4);
+        radioBtnRemember5= (RadioButton) findViewById(R.id.radioBtnRemember5);
 
         radioBtnRemember1.setEnabled(false);
         radioBtnRemember2.setEnabled(false);
         radioBtnRemember3.setEnabled(false);
         radioBtnRemember4.setEnabled(false);
+        radioBtnRemember5.setEnabled(false);
 
         radioGroupRemember.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -94,7 +102,15 @@ public class AddNoteActivity extends MainActivity implements
                         offsetTime = 12 * 60 * 60 * 1000;
                         break;
                     case R.id.radioBtnRemember4:
-                        offsetTime = 24 * 60 * 60 * 1000;
+                        offsetTime = -1;
+                        break;
+                    case R.id.radioBtnRemember5:
+                        if (newFragment != null) {
+                            newFragment.onStart();
+                        } else {
+                            newFragment = new DatePickerFragment();
+                            newFragment.show(getFragmentManager(), "datePicker");
+                        }
                         break;
                 }
             }
@@ -138,8 +154,10 @@ public class AddNoteActivity extends MainActivity implements
                 Note note = new Note(-1, "", spokenText, dateString);
                 Intent intent = new Intent();
                 intent.putExtra("new_note", note);
-                if (offsetTime != null) {
+                if (offsetTime > 0) {
                     intent.putExtra("offsetTime", offsetTime);
+                    Log.d("IMPORANT", "Class AddNoteActivity, line number - 159" +
+                            String.valueOf(offsetTime));
                 }
                 setResult(RESULT_OK, intent);
                 finish();
@@ -184,6 +202,7 @@ public class AddNoteActivity extends MainActivity implements
             radioBtnRemember2.setEnabled(true);
             radioBtnRemember3.setEnabled(true);
             radioBtnRemember4.setEnabled(true);
+            radioBtnRemember5.setEnabled(true);
         }
     }
 
@@ -373,4 +392,21 @@ public class AddNoteActivity extends MainActivity implements
             }
         }
     }
+
+    /* Функция для получения данных о дате заметки */
+    public void setDateAndTime(long value) {
+        Date now = new Date();
+        Date date = new Date(value);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy k:mm");
+        String dateString = dateFormat.format(date);
+        offsetTime = value - now.getTime();
+        radioBtnRemember5.setText(String.valueOf(offsetTime));
+    }
+
+    public void cancelDateAndTime() {
+        radioBtnRemember5.setText(R.string.addNote_remember_custom);
+        radioBtnRemember1.setChecked(true);
+        offsetTime = -1;
+    }
+
 }

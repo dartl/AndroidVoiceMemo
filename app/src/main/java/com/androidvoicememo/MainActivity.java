@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -243,10 +244,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         "Заметка сохранена", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            if (data.getIntExtra("offsetTime",-1) > 0) {
-                int offset = data.getIntExtra("offsetTime",-1);
+            if (data.getLongExtra("offsetTime", -1) > 0) {
+                long offset = data.getLongExtra("offsetTime",-1);
                 data.removeExtra("offsetTime");
-                cursor_Notes.moveToLast();
+                Log.d("IMPORANT","Class MainActivity, line number - 250" + String.valueOf(offset));
+                cursor_Notes.moveToFirst();
                 Note note_s = new Note(cursor_Notes);
                 restartNotify(note_s,offset);
             }
@@ -268,7 +270,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void restartNotify(Note note, int offsetTime) {
+    private void restartNotify(Note note, long offsetTime) {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, TimeNotification.class);
         intent.putExtra("note",note);
