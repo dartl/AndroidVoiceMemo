@@ -400,12 +400,12 @@ public class AddNoteActivity extends MainActivity implements
         SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy k:mm");
         String dateString = dateFormat.format(date);
         offsetTime = value - now.getTime();
-        radioBtnRemember5.setText(String.valueOf(offsetTime));
+        radioBtnRemember5.setText(dateString);
     }
 
     public void cancelDateAndTime() {
         radioBtnRemember5.setText(R.string.addNote_remember_custom);
-        radioBtnRemember1.setChecked(true);
+        radioBtnRemember4.setChecked(true);
         offsetTime = -1;
     }
 

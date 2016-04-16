@@ -1,7 +1,9 @@
 package com.androidvoicememo;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -10,15 +12,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -26,9 +30,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.androidvoicememo.adapters.CursorNoteAdapter;
 import com.androidvoicememo.adapters.TimeNotification;
@@ -41,8 +45,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     // указатели на элементы интерфейса
     private Button btn_show_AddNote;
     private ListView listViewNodes;
-    private Button btn_Search;
-    private Button btn_Search_Clear;
     private ImageButton imageButtonCancelSearch;
     private EditText editText_SearchPhrase;
     // массив имен атрибутов, из которых будут читаться данные
@@ -77,6 +79,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*ActionBar aB = new ActionBar();*/
+        Log.d("IMPORTANT","Программа запустилась");
         /* Тестовое подключение к БД */
         SQLiteDBHelper dbHelper = new SQLiteDBHelper(this);
 
@@ -168,6 +172,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         });
     }
+
+
 
     @Override
     public void onClick(View v) {

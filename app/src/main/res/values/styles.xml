@@ -6,9 +6,11 @@
         <item name="actionBarStyle">@style/MyActionBarTheme</item>
     </style>
 
-    <style name="MyActionBarTheme" parent="Widget.AppCompat.ActionBar">
+    <style name="MyActionBarTheme" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">@drawable/bg_action_bar</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:height">56dp</item>
     </style>
 
     <style name="gawk_style_button">
@@ -16,6 +18,12 @@
         <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
         <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
         <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="gawk_style_button_delete" parent="gawk_style_button_red">
+        <item name="android:drawableTop">@drawable/delete_note</item>
+        <item name="android:textOn">false</item>
+        <item name="android:paddingTop">10dp</item>
     </style>
 
     <style name="gawk_style_button_red">
@@ -44,5 +52,6 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-
 </resources>
+
+

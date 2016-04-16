@@ -57,14 +57,14 @@
         style="@style/gawk_style_button_gray" />
 
     <Button
-        style="@style/gawk_style_button_red"
+        style="@style/gawk_style_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/main_delete_note"
         android:id="@+id/btn_deleteNote"
-        android:textSize="@dimen/viewNote_heading_size"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:singleLine="false"
+        android:layout_alignBottom="@+id/btn_copyText" />
 
 </RelativeLayout>
