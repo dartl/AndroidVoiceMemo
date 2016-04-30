@@ -5,68 +5,31 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
     android:id="@+id/relativeLayout">
 
-    <!-- <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="@string/app_name"
-        android:minHeight="@dimen/abc_action_bar_default_height_material"
-        android:nestedScrollingEnabled="true"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" /> -->
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/main_add_memo"
-        android:id="@+id/btn_show_AddNote"
-        android:textSize="@dimen/main_heading_size"
-        style="@style/gawk_style_button_invers"
-        android:backgroundTintMode="src_in"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText_SearchPhrase"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/btn_show_AddNote"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:inputType="text"
-        android:singleLine="true"
-        android:imeOptions="actionSearch"
-        android:text="@string/main_searchPhrase"
-        android:paddingRight="30dp"
-        android:translationZ="50dp">
-        <requestFocus />
-    </EditText>
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ActionBarTheme"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listViewNodes"
-        android:layout_below="@+id/editText_SearchPhrase"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbarTop"
+        android:layout_alignParentBottom="true" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButtonCancelSearch"
-        android:src="@drawable/cancel"
-        android:background="#00ffffff"
-        android:layout_alignTop="@+id/editText_SearchPhrase"
-        android:layout_alignRight="@+id/editText_SearchPhrase"
-        android:layout_alignEnd="@+id/editText_SearchPhrase"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="5dp" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/imageButton_show_AddNote"
+        android:background="@drawable/button_addnote_animation"
+        style="@style/gawk_addNote"
+        android:layout_below="@+id/toolbarTop"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

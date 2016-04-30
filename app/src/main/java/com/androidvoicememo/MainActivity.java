@@ -1,8 +1,6 @@
 package com.androidvoicememo;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,11 +10,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -30,9 +28,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.androidvoicememo.adapters.CursorNoteAdapter;
 import com.androidvoicememo.adapters.TimeNotification;
@@ -40,13 +38,11 @@ import com.androidvoicememo.db.SQLiteDBHelper;
 import com.androidvoicememo.model.Note;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // указатели на элементы интерфейса
-    private Button btn_show_AddNote;
     private ListView listViewNodes;
-    private ImageButton imageButtonCancelSearch;
-    private EditText editText_SearchPhrase;
+    private ImageButton imageButton_show_AddNote;
     // массив имен атрибутов, из которых будут читаться данные
     private String[] from = {SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE,
             SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE};
@@ -69,7 +65,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        editText_SearchPhrase.setText(getResources().getText(R.string.main_searchPhrase));
         cursor_Notes = getAllNotes();
         sAdapterNotes.changeCursor(cursor_Notes);
     }
@@ -79,7 +74,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*ActionBar aB = new ActionBar();*/
+        ActionBar ab;
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        setSupportActionBar(myToolbar);
         Log.d("IMPORTANT","Программа запустилась");
         /* Тестовое подключение к БД */
         SQLiteDBHelper dbHelper = new SQLiteDBHelper(this);
@@ -118,59 +115,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         listViewNodes.setAdapter(sAdapterNotes);
 
         /* Обработка событий клика */
-        btn_show_AddNote = (Button) findViewById(R.id.btn_show_AddNote);
-        btn_show_AddNote.setOnClickListener(this);
-        imageButtonCancelSearch = (ImageButton) findViewById(R.id.imageButtonCancelSearch);;
-        imageButtonCancelSearch.setOnClickListener(this);
+        imageButton_show_AddNote = (ImageButton) findViewById(R.id.imageButton_show_AddNote);
+        imageButton_show_AddNote.setOnClickListener(this);
 
-        editText_SearchPhrase = (EditText) findViewById(R.id.editText_SearchPhrase);
-        editText_SearchPhrase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((EditText) v).setText("");
-            }
-        });
 
-        editText_SearchPhrase.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    EditText eText = (EditText) v;
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    if (eText.getText().toString().length() == 0) {
-                        eText.setText(getResources().getText(R.string.main_searchPhrase));
-                        cursor_Notes = getAllNotes();
-                        sAdapterNotes.changeCursor(cursor_Notes);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-        editText_SearchPhrase.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                String str = s.toString();
-                str.toLowerCase();
-
-                cursor_Notes_Search = db.rawQuery("SELECT * FROM " +
-                        SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (lower(" +
-                        SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + ") like '%" + s + "%') ORDER BY " +
-                        SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE + " DESC", null);
-
-                sAdapterNotes.changeCursor(cursor_Notes_Search);
-            }
-        });
     }
 
 
@@ -180,17 +129,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         switch (v.getId()) {
             /* Клик по кнопке "Добавить заметку" */
-            case R.id.btn_show_AddNote:
+            case R.id.imageButton_show_AddNote:
                 Intent intent = new Intent(this, AddNoteActivity.class);
                 startActivityForResult(intent, ADD_NEW_NOTE);
                 break;
-            case R.id.imageButtonCancelSearch:
+            /*case R.id.imageButtonCancelSearch:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 editText_SearchPhrase.setText(getResources().getText(R.string.main_searchPhrase));
                 cursor_Notes = getAllNotes();
                 sAdapterNotes.changeCursor(cursor_Notes);
-                break;
+                break;*/
             default:
                 break;
         }
@@ -200,6 +149,33 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView =
+                (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(
+                new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        String str = newText.toString();
+                        str.toLowerCase();
+
+                        cursor_Notes_Search = db.rawQuery("SELECT * FROM " +
+                                SQLiteDBHelper.NOTES_TABLE_NAME + " WHERE (lower(" +
+                                SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE + ") like '%" + newText + "%') ORDER BY " +
+                                SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE + " DESC", null);
+
+                        sAdapterNotes.changeCursor(cursor_Notes_Search);
+                        return false;
+                    }
+                }
+        );
+
         return true;
     }
 

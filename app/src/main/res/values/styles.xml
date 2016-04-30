@@ -1,16 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="actionBarStyle">@style/MyActionBarTheme</item>
+        <item name="actionBarStyle">@style/ActionBarTheme</item>
     </style>
 
-    <style name="MyActionBarTheme" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="background">@drawable/bg_action_bar</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:height">56dp</item>
+    <style name="ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">#007586</item>
+        <item name="android:textColorPrimary">@color/background_floating_material_light</item>
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+        <item name="colorControlHighlight">@color/button_material_light</item>
     </style>
 
     <style name="gawk_style_button">
@@ -50,6 +51,18 @@
         <item name="android:drawableLeft">@drawable/icon_time</item>
         <item name="android:textColor">@color/dateColor</item>
         <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="gawk_style_list_node">
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:background">#fff</item>
+        <item name="android:paddingRight">@dimen/main_padding_list_node</item>
+        <item name="android:paddingLeft">@dimen/main_padding_list_node</item>
+    </style>
+
+    <style name="gawk_addNote">
+        <item name="android:layout_marginRight">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
     </style>
 
 </resources>

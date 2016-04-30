@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+    <item android:id="@+id/action_search"
+        android:title="Поиск"
+        android:icon="@drawable/search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
     <item android:id="@+id/app_name_addNote" android:title="@string/app_name_addNote"
         android:orderInCategory="1" app:showAsAction="never" />
     <!--<item android:id="@+id/app_name_searchNote" android:title="@string/app_name_searchNote"
