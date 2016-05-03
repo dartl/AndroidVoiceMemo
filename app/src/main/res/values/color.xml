@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="dateColor">#959595</color>
+    <color name="style_gawk_mainColor">#007586</color>
+    <color name="style_gawk_mainColor_bg">@color/background_material_light</color>
 </resources>

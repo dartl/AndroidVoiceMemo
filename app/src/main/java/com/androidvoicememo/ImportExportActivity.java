@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,7 +23,7 @@ import java.io.IOException;
 /**
  * Created by Dartl on 24.03.2016.
  */
-public class ImportExportActivity extends MainActivity {
+public class ImportExportActivity extends ParentActivity {
     private Button btn_Export;
     private Button btn_SelectFile;
     private Button btn_Import;
@@ -39,6 +40,9 @@ public class ImportExportActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.import_export_activity);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        setSupportActionBar(myToolbar);
 
         /* Тестовое подключение к БД */
         dbHelper = new SQLiteDBHelper(this);

@@ -15,9 +15,12 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +41,7 @@ import java.util.List;
 /**
  * Created by Dartl on 03.03.2016.
  */
-public class AddNoteActivity extends MainActivity implements
+public class AddNoteActivity extends ParentActivity implements
         RecognitionListener {
 
     private Button btn_addNote_save;
@@ -61,10 +64,22 @@ public class AddNoteActivity extends MainActivity implements
     private Intent recognizerIntent;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_note);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        setSupportActionBar(myToolbar);
         /* Начало записи звука */
 
         /* Инициализируем окно для ошибки, чтобы не было NullPointerExeption */
@@ -408,5 +423,15 @@ public class AddNoteActivity extends MainActivity implements
         radioBtnRemember4.setChecked(true);
         offsetTime = -1;
     }
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        boolean result = super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(false);
+        return result;
+    }*/
 
 }

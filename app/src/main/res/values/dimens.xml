@@ -20,4 +20,6 @@
     <dimen name="addNote_button_paddingTop">18dp</dimen>
     <dimen name="addNote_heading_top_margin">24dp</dimen>
     <dimen name="addNote_padding">6dp</dimen>
+
+    <dimen name="styleGawkMainPadding">2dp</dimen>
 </resources>

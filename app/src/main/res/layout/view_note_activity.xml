@@ -2,69 +2,85 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    >
+    android:paddingBottom="@dimen/styleGawkMainPadding"
+    android:background="@color/style_gawk_mainColor"
+    android:paddingRight="@dimen/styleGawkMainPadding"
+    android:paddingLeft="@dimen/styleGawkMainPadding">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Date"
-        android:id="@+id/viewNote_textVDate"
-        android:textStyle="italic"
-        android:layout_below="@+id/btn_copyText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingRight="@dimen/viewNote_padding"
-        android:paddingLeft="@dimen/viewNote_padding"
-        style="@style/gawk_style_date" />
-
-    <ScrollView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_below="@+id/viewNote_textVDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:paddingRight="@dimen/viewNote_padding"
-        android:paddingLeft="@dimen/viewNote_padding"
-        android:paddingTop="@dimen/viewNote_padding">
+        android:background="@color/style_gawk_mainColor_bg">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarTop"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ActionBarTheme"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:elevation="4dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Text"
-            android:id="@+id/viewNote_textVText"
-            android:textIsSelectable="true"
-            android:layout_alignTop="@+id/scrollView"
+            android:text="Date"
+            android:id="@+id/viewNote_textVDate"
+            android:textStyle="italic"
+            android:layout_below="@+id/btn_copyText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textSize="@dimen/viewNote_body_size" />
-    </ScrollView>
+            android:paddingRight="@dimen/viewNote_padding"
+            android:paddingLeft="@dimen/viewNote_padding"
+            style="@style/gawk_style_date" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/viewNote_copy"
-        android:id="@+id/btn_copyText"
-        android:textSize="@dimen/viewNote_heading_size"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        style="@style/gawk_style_button_gray" />
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView"
+            android:layout_below="@+id/viewNote_textVDate"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="@dimen/viewNote_padding"
+            android:paddingLeft="@dimen/viewNote_padding"
+            android:paddingTop="@dimen/viewNote_padding">
 
-    <Button
-        style="@style/gawk_style_button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_deleteNote"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:singleLine="false"
-        android:layout_alignBottom="@+id/btn_copyText" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Text"
+                android:id="@+id/viewNote_textVText"
+                android:textIsSelectable="true"
+                android:layout_alignTop="@+id/scrollView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textSize="@dimen/viewNote_body_size" />
+        </ScrollView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/viewNote_copy"
+            android:id="@+id/btn_copyText"
+            android:textSize="@dimen/viewNote_heading_size"
+            style="@style/gawk_style_button_gray"
+            android:layout_below="@+id/toolbarTop"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            style="@style/gawk_style_button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_deleteNote"
+            android:singleLine="false"
+            android:layout_below="@+id/toolbarTop"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/btn_copyText" />
+    </RelativeLayout>
 
 </RelativeLayout>

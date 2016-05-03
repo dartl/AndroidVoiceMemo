@@ -13,7 +13,8 @@
     <!-- Остальное -->
         <string name="main_add_memo">Сделать заметку</string>
         <string name="main_delete_note">Удалить</string>
-        <string name="main_searchPhrase">Поисковая фраза</string>
+        <string name="main_searchPhrase">Поиск...</string>
+        <string name="main_search">Поиск</string>
 
         <!-- Окно Сделать запись -->
         <string name="addNote_record">Идёт запись: </string>
@@ -71,4 +72,8 @@
         <string name="export_import_SelectFile">Выбрать файл</string>
         <string name="export_import_TV_SelectFile">Файл не выбран...</string>
     <string name="action_settings">Настройки</string>
+
+    <!-- id рекламного блока -->
+    <string name="banner_ad_unit_id">ca-app-pub-3962065675469859/3569530194</string>
+
 </resources>

@@ -4,6 +4,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,19 +16,21 @@ import com.androidvoicememo.model.Note;
 /**
  * Created by Dartl on 04.03.2016.
  */
-public class ViewNoteActivity extends MainActivity {
+public class ViewNoteActivity extends ParentActivity {
     private TextView viewNote_textVDate;
     private TextView viewNote_textVText;
     private Button btn_deleteNote;
     private Button btn_copyText;
     private Note note;
 
-    private String fileName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_note_activity);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        setSupportActionBar(myToolbar);
+
         /* Выводим данные полученные из основного списка */
         viewNote_textVDate = (TextView) findViewById(R.id.viewNote_textVDate);
         viewNote_textVText = (TextView) findViewById(R.id.viewNote_textVText);
