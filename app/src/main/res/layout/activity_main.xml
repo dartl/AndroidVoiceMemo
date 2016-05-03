@@ -30,17 +30,11 @@
             android:id="@+id/listViewNodes"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbarTop" />
-
-        <ImageButton
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/imageButton_show_AddNote"
-            android:background="@drawable/button_addnote_animation"
-            style="@style/gawk_addNote"
             android:layout_below="@+id/toolbarTop"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:divider="@null" android:dividerHeight="0dp"
+            android:paddingLeft="@dimen/main_margin_list_node"
+            android:paddingRight="@dimen/main_margin_list_node" />
+
     </RelativeLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/ad_view"

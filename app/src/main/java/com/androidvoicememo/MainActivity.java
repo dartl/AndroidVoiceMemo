@@ -1,32 +1,17 @@
 package com.androidvoicememo;
 
-import android.app.ActionBar;
-import android.app.AlarmManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import android.widget.Toast;
 
 import com.androidvoicememo.adapters.CursorNoteAdapter;
-import com.androidvoicememo.adapters.TimeNotification;
 import com.androidvoicememo.db.SQLiteDBHelper;
 import com.androidvoicememo.model.Note;
 import com.google.android.gms.ads.AdRequest;
@@ -37,13 +22,11 @@ public class MainActivity extends ParentActivity {
 
     // указатели на элементы интерфейса
     private ListView listViewNodes;
-    private ImageButton imageButton_show_AddNote;
     // массив имен атрибутов, из которых будут читаться данные
     private String[] from = {SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE,
             SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE};
     // массив ID View-компонентов, в которые будут вставлять данные
     private int[] to = {R.id.textVNode_text, R.id.textVDate };
-
 
     /* реклама */
     private AdView mAdView;
@@ -80,9 +63,6 @@ public class MainActivity extends ParentActivity {
         sAdapterNotes = new CursorNoteAdapter(this,R.layout.list_notes_activity, cursor_Notes, from, to);
         listViewNodes.setAdapter(sAdapterNotes);
 
-        /* Обработка событий клика */
-        imageButton_show_AddNote = (ImageButton) findViewById(R.id.imageButton_show_AddNote);
-        imageButton_show_AddNote.setOnClickListener(this);
 
 
         // Gets the ad view defined in layout/ad_fragment.xml with ad unit ID set in
@@ -139,6 +119,7 @@ public class MainActivity extends ParentActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu);
         searchItem.setVisible(true);
+        searchItemAdd.setVisible(true);
         return true;
     }
 

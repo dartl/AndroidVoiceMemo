@@ -35,6 +35,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     protected static final int EXPORT_NOTE = 402;
 
     protected MenuItem searchItem;
+    protected MenuItem searchItemAdd;
 
     // Указатель на выборку заметок из БД
     protected Cursor cursor_Notes;
@@ -74,6 +75,8 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         ActionBarMenu = menu;
 
         searchItem = menu.findItem(R.id.action_search);
+        searchItemAdd = menu.findItem(R.id.app_name_addNote);
+        searchItemAdd.setVisible(false);
         SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint(getResources().getString(R.string.main_searchPhrase));
@@ -137,11 +140,6 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
 
         switch (v.getId()) {
-            /* Клик по кнопке "Добавить заметку" */
-            case R.id.imageButton_show_AddNote:
-                Intent intent = new Intent(this, AddNoteActivity.class);
-                startActivityForResult(intent, ADD_NEW_NOTE);
-                break;
             /*case R.id.imageButtonCancelSearch:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);

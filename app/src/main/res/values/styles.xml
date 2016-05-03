@@ -55,7 +55,7 @@
 
     <style name="gawk_style_list_node">
         <item name="android:layout_margin">6dp</item>
-        <item name="android:background">#fff</item>
+        <item name="android:background">@drawable/row_background</item>
         <item name="android:paddingRight">@dimen/main_padding_list_node</item>
         <item name="android:paddingLeft">@dimen/main_padding_list_node</item>
     </style>

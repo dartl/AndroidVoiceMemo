@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidvoicememo.adapters.TimeNotification;
 import com.androidvoicememo.model.Note;
 
 /**

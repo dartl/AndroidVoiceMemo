@@ -12,6 +12,7 @@
     <dimen name="main_heading_size">24sp</dimen>
     <dimen name="main_padding_button">18dp</dimen>
     <dimen name="main_padding_list_node">12dp</dimen>
+    <dimen name="main_margin_list_node">6dp</dimen>
 
     <!-- Размеры окно добавления заметки -->
     <dimen name="addNote_body_size">18sp</dimen>

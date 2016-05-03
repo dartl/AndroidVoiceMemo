@@ -3,4 +3,5 @@
     <color name="dateColor">#959595</color>
     <color name="style_gawk_mainColor">#007586</color>
     <color name="style_gawk_mainColor_bg">@color/background_material_light</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -8,7 +8,10 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item android:id="@+id/app_name_addNote" android:title="@string/app_name_addNote"
-        android:orderInCategory="1" app:showAsAction="never" />
+        android:orderInCategory="1"
+        android:icon="@drawable/add_new_note"
+        app:showAsAction="ifRoom|collapseActionView"
+        />
     <!--<item android:id="@+id/app_name_searchNote" android:title="@string/app_name_searchNote"
         android:orderInCategory="2" app:showAsAction="never" />-->
     <!--<item android:id="@+id/app_name_settings" android:title="@string/app_name_settings"
