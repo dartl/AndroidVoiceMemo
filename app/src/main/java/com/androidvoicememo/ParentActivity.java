@@ -35,7 +35,9 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     protected static final int EXPORT_NOTE = 402;
 
     protected MenuItem searchItem;
-    protected MenuItem searchItemAdd;
+    protected MenuItem addItem;
+    protected MenuItem cancelItem;
+    protected MenuItem deleteNoteItem;
 
     // Указатель на выборку заметок из БД
     protected Cursor cursor_Notes;
@@ -75,8 +77,14 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         ActionBarMenu = menu;
 
         searchItem = menu.findItem(R.id.action_search);
-        searchItemAdd = menu.findItem(R.id.app_name_addNote);
-        searchItemAdd.setVisible(false);
+        cancelItem = menu.findItem(R.id.action_cancel);
+        addItem = menu.findItem(R.id.app_name_addNote);
+        deleteNoteItem = menu.findItem(R.id.action_deleteNote);
+
+        deleteNoteItem.setVisible(false);
+        addItem.setVisible(false);
+        cancelItem.setVisible(false);
+
         SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint(getResources().getString(R.string.main_searchPhrase));
@@ -120,6 +128,9 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.app_name_reference:
                 intent = new Intent(this, ReferenceActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_cancel:
+                finish();
                 break;
             /*case R.id.app_name_searchNote:
             break;

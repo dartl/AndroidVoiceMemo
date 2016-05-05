@@ -68,19 +68,8 @@
             android:textSize="@dimen/viewNote_heading_size"
             style="@style/gawk_style_button_gray"
             android:layout_below="@+id/toolbarTop"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_centerHorizontal="true" />
 
-        <Button
-            style="@style/gawk_style_button_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_deleteNote"
-            android:singleLine="false"
-            android:layout_below="@+id/toolbarTop"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/btn_copyText" />
     </RelativeLayout>
 
 </RelativeLayout>

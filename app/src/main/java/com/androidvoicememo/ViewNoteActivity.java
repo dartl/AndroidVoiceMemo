@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,7 +20,6 @@ import com.androidvoicememo.model.Note;
 public class ViewNoteActivity extends ParentActivity {
     private TextView viewNote_textVDate;
     private TextView viewNote_textVText;
-    private Button btn_deleteNote;
     private Button btn_copyText;
     private Note note;
 
@@ -33,7 +34,6 @@ public class ViewNoteActivity extends ParentActivity {
         /* Выводим данные полученные из основного списка */
         viewNote_textVDate = (TextView) findViewById(R.id.viewNote_textVDate);
         viewNote_textVText = (TextView) findViewById(R.id.viewNote_textVText);
-        btn_deleteNote = (Button) findViewById(R.id.btn_deleteNote);
         btn_copyText = (Button) findViewById(R.id.btn_copyText);
 
         Intent intent = getIntent();
@@ -42,27 +42,45 @@ public class ViewNoteActivity extends ParentActivity {
         viewNote_textVText.setText(note.getText_note());
 
         btn_copyText.setOnClickListener(this);
-        btn_deleteNote.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_deleteNote:
-                Intent intent = new Intent();
-                intent.putExtra("delete_note", note);
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
             case R.id.btn_copyText:
                 ClipboardManager _clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
                 _clipboard.setText(viewNote_textVText.getText());
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Текст успешно скоппирован", Toast.LENGTH_LONG);
+                        "Текст успешно скоппирован", Toast.LENGTH_SHORT);
                 toast.show();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
+        deleteNoteItem.setVisible(true);
+        cancelItem.setVisible(true);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //события меню
+        switch (id) {
+            case R.id.action_deleteNote:
+                Intent intent = new Intent();
+                intent.putExtra("delete_note", note);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

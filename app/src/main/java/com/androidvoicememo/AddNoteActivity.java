@@ -45,7 +45,6 @@ public class AddNoteActivity extends ParentActivity implements
         RecognitionListener {
 
     private Button btn_addNote_save;
-    private Button btn_addNote_cancel;
     private EditText recognizeText;
     private RadioGroup radioGroupRemember;
     private long offsetTime = -1;
@@ -96,11 +95,6 @@ public class AddNoteActivity extends ParentActivity implements
         radioBtnRemember4= (RadioButton) findViewById(R.id.radioBtnRemember4);
         radioBtnRemember5= (RadioButton) findViewById(R.id.radioBtnRemember5);
 
-        radioBtnRemember1.setEnabled(false);
-        radioBtnRemember2.setEnabled(false);
-        radioBtnRemember3.setEnabled(false);
-        radioBtnRemember4.setEnabled(false);
-        radioBtnRemember5.setEnabled(false);
 
         radioGroupRemember.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -132,10 +126,8 @@ public class AddNoteActivity extends ParentActivity implements
         });
         /* Добавляем обработчики кликов */
         btn_addNote_save = (Button) findViewById(R.id.btn_addNote_save);
-        btn_addNote_cancel = (Button) findViewById(R.id.btn_addNote_cancel);
         recognizeText = (EditText) findViewById(R.id.recognizeText);
         btn_addNote_save.setOnClickListener(this);
-        btn_addNote_cancel.setOnClickListener(this);
         recognizeText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -177,10 +169,6 @@ public class AddNoteActivity extends ParentActivity implements
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
-            /* Клик по кнопке "Отмена" */
-            case R.id.btn_addNote_cancel:
-                finish();
-                break;
             default:
                 break;
         }
@@ -212,12 +200,6 @@ public class AddNoteActivity extends ParentActivity implements
         if (spokenText == null) {
             spokenText = "Текст не удалось распознать";
             recognizeText.setText(spokenText);
-        } else {
-            radioBtnRemember1.setEnabled(true);
-            radioBtnRemember2.setEnabled(true);
-            radioBtnRemember3.setEnabled(true);
-            radioBtnRemember4.setEnabled(true);
-            radioBtnRemember5.setEnabled(true);
         }
     }
 
@@ -290,8 +272,6 @@ public class AddNoteActivity extends ParentActivity implements
         spokenText = spokenText.toLowerCase();
         recognizeText.setText(spokenText);
         /* включаем неактивные кнопку Сохранить и распознанный текст */
-        recognizeText.setEnabled(true);
-        btn_addNote_save.setEnabled(true);
         speech.cancel();
         speech.destroy();
     }
@@ -424,14 +404,12 @@ public class AddNoteActivity extends ParentActivity implements
         offsetTime = -1;
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        boolean result = super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchItem.setVisible(false);
-        return result;
-    }*/
+        super.onCreateOptionsMenu(menu);
+        cancelItem.setVisible(true);
+        return true;
+    }
 
 }

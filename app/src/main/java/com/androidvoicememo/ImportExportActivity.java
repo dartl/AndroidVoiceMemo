@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -135,6 +136,14 @@ public class ImportExportActivity extends ParentActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
+        cancelItem.setVisible(true);
+        return true;
     }
 
 }

@@ -119,7 +119,7 @@ public class MainActivity extends ParentActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu);
         searchItem.setVisible(true);
-        searchItemAdd.setVisible(true);
+        addItem.setVisible(true);
         return true;
     }
 
