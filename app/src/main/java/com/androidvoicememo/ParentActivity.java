@@ -178,7 +178,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
                 cursor_Notes = getAllNotes();
                 sAdapterNotes.changeCursor(cursor_Notes);
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Заметка сохранена", Toast.LENGTH_SHORT);
+                        getResources().getText(R.string.saveNote), Toast.LENGTH_SHORT);
                 toast.show();
             }
             if (data.getLongExtra("offsetTime", -1) > 0) {

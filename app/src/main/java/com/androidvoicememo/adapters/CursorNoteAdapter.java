@@ -2,12 +2,9 @@ package com.androidvoicememo.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.androidvoicememo.R;
 
 /**
  * Created by Dartl on 03.03.2016.

@@ -51,7 +51,7 @@ public class ViewNoteActivity extends ParentActivity {
                 ClipboardManager _clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
                 _clipboard.setText(viewNote_textVText.getText());
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Текст успешно скоппирован", Toast.LENGTH_SHORT);
+                        getResources().getText(R.string.textSaveSuccess), Toast.LENGTH_SHORT);
                 toast.show();
                 break;
             default:

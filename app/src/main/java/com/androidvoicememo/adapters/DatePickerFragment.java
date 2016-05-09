@@ -2,9 +2,7 @@ package com.androidvoicememo.adapters;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -65,7 +63,7 @@ public class DatePickerFragment extends DialogFragment{
                     dialog.hide();
                 } else {
                     Toast toast = Toast.makeText(callingActivity,
-                            "Введите будущую дату", Toast.LENGTH_SHORT);
+                            getResources().getText(R.string.head_select_date), Toast.LENGTH_SHORT);
                     toast.show();
                 }
 

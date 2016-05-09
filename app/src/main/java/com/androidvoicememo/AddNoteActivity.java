@@ -20,14 +20,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidvoicememo.adapters.DatePickerFragment;
@@ -55,7 +52,7 @@ public class AddNoteActivity extends ParentActivity implements
     private RadioButton radioBtnRemember5;
 
     /* Пермененые, относящиеся к записи звука */
-    private String spokenText = "Текст не удалось распознать";
+    private String spokenText;
     AlertDialog aDialog;
     DialogFragment newFragment;
 
@@ -76,6 +73,8 @@ public class AddNoteActivity extends ParentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_note);
+
+        spokenText = (String) getResources().getText(R.string.textNotRecognize);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
         setSupportActionBar(myToolbar);
@@ -198,7 +197,7 @@ public class AddNoteActivity extends ParentActivity implements
     @Override
     public void onEndOfSpeech() {
         if (spokenText == null) {
-            spokenText = "Текст не удалось распознать";
+            spokenText = (String) getResources().getText(R.string.textNotRecognize);
             recognizeText.setText(spokenText);
         }
     }
@@ -209,7 +208,7 @@ public class AddNoteActivity extends ParentActivity implements
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         switch (error) {
             case SpeechRecognizer.ERROR_AUDIO:
-                message = "Ошибка записи звука с микрофона";
+                message = (String) getResources().getText(R.string.errorAudio);
                 break;
             case SpeechRecognizer.ERROR_CLIENT:
                 message = "Client side error";
@@ -218,17 +217,17 @@ public class AddNoteActivity extends ParentActivity implements
                 message = "Insufficient permissions";
                 break;
             case SpeechRecognizer.ERROR_NETWORK:
-                message = "Ошибка подключения к интернету. Проверьте подключение к интернету и попробуйте снова.";
+                message = (String) getResources().getText(R.string.errorNetwork);
                 break;
             case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
                 message = "Network timeout";
                 break;
             case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
             case SpeechRecognizer.ERROR_NO_MATCH:
-                message = "Текст не удалось распознать";
-                spokenText = "Текст не удалось распознать";
+                message = (String) getResources().getText(R.string.textNotRecognize);
+                spokenText = (String) getResources().getText(R.string.textNotRecognize);
                 recognizeText.setText(spokenText);
-                dialog.setPositiveButton("Попробовать снова", new DialogInterface.OnClickListener() {    // положительная кнопка
+                dialog.setPositiveButton(getResources().getText(R.string.tryAgain), new DialogInterface.OnClickListener() {    // положительная кнопка
 
                     // обработчик нажатия на кнопку Установить
                     @Override
@@ -238,18 +237,18 @@ public class AddNoteActivity extends ParentActivity implements
                 });
                 break;
             case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                message = "Сервер распознования речи на данный момент занят, попробуйте пойзже.";
+                message = (String) getResources().getText(R.string.errorRecognizeBusy);
                 break;
             case SpeechRecognizer.ERROR_SERVER:
-                message = "Ошибка на стороне сервера. Проверьте подключение к интернету и попробуйте снова.";
+                message = (String) getResources().getText(R.string.errorServer);
                 break;
             default:
-                message = "Не удалось распознать текст";
+                message = (String) getResources().getText(R.string.textNotRecognize);
                 break;
         }
 
         dialog.setMessage(message)	// сообщение
-                .setTitle("Внимание");
+                .setTitle(getResources().getText(R.string.attention));
         if(!aDialog.isShowing()) {
             aDialog = dialog.show();
         }
@@ -263,10 +262,10 @@ public class AddNoteActivity extends ParentActivity implements
         spokenText = matches.get(0);
 
         if (spokenText == null) {
-            spokenText = "Текст не удалось распознать";
+            spokenText = (String) getResources().getText(R.string.textNotRecognize);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Мы распознали текст, сохраните или отмените сохранение заметки", Toast.LENGTH_SHORT);
+                    getResources().getText(R.string.weRecognize), Toast.LENGTH_SHORT);
             toast.show();
         }
         spokenText = spokenText.toLowerCase();
@@ -308,14 +307,14 @@ public class AddNoteActivity extends ParentActivity implements
         return false; // we have no activities to recognize the speech
     }
 
-    private static void installGoogleVoiceSearch(final Activity ownerActivity) {
+    private void installGoogleVoiceSearch(final Activity ownerActivity) {
 
         // создаем диалог, который спросит у пользователя хочет ли он
         // установить Голосовой Поиск
         Dialog dialog = new AlertDialog.Builder(ownerActivity)
-                .setMessage("Для распознавания речи необходимо установить приложение \"Google\" с функцией голосового поиска.")	// сообщение
-                .setTitle("Внимание")	// заголовок диалога
-                .setPositiveButton("Установить", new DialogInterface.OnClickListener() {    // положительная кнопка
+                .setMessage(getResources().getText(R.string.messageNeedInstall))	// сообщение
+                .setTitle(getResources().getText(R.string.attention))	// заголовок диалога
+                .setPositiveButton(getResources().getText(R.string.install), new DialogInterface.OnClickListener() {    // положительная кнопка
 
                     // обработчик нажатия на кнопку Установить
                     @Override
@@ -336,7 +335,7 @@ public class AddNoteActivity extends ParentActivity implements
                     }
                 })
 
-                .setNegativeButton("Отмена", null)	// негативная кнопка
+                .setNegativeButton(getResources().getText(R.string.cancel), null)	// негативная кнопка
                 .create();
 
         dialog.show();	// показываем диалог
@@ -382,8 +381,8 @@ public class AddNoteActivity extends ParentActivity implements
             } else {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.
-                        setMessage("У вас отсутствует подключение к интернету, включите его и попробуйте снова.").
-                        setTitle("Внимание");
+                        setMessage(getResources().getText(R.string.errorConnectionInternet)).
+                        setTitle(getResources().getText(R.string.attention));
             }
         }
     }

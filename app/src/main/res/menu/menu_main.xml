@@ -2,11 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
-    <item android:id="@+id/action_search"
-        android:title="@string/main_search"
-        android:icon="@drawable/search"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
     <item android:id="@+id/action_cancel" android:title="@string/addNote_cancel"
         android:icon="@drawable/cancel"
         app:showAsAction="ifRoom|collapseActionView"
@@ -16,10 +11,17 @@
         app:showAsAction="ifRoom|collapseActionView"
         />
     <item android:id="@+id/app_name_addNote" android:title="@string/app_name_addNote"
-        android:orderInCategory="1"
+        android:orderInCategory="0"
         android:icon="@drawable/add_new_note"
         app:showAsAction="ifRoom|collapseActionView"
         />
+    <item android:id="@+id/action_search"
+        android:title="@string/main_search"
+        android:icon="@drawable/search"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+
     <!--<item android:id="@+id/app_name_searchNote" android:title="@string/app_name_searchNote"
         android:orderInCategory="2" app:showAsAction="never" />-->
     <!--<item android:id="@+id/app_name_settings" android:title="@string/app_name_settings"

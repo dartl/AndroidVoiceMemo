@@ -17,7 +17,7 @@
         android:elevation="4dp" />
 
     <ScrollView
-        android:layout_width="wrap_content" android:layout_height="match_parent"
+        android:layout_width="fill_parent" android:layout_height="match_parent"
         android:background="@color/style_gawk_mainColor_bg" android:layout_below="@+id/toolbarTop">
 
         <RelativeLayout
@@ -41,7 +41,6 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/reference_AddNote_header"
                     android:id="@+id/textView3"
-                    android:layout_below="@+id/toolbarTop"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 

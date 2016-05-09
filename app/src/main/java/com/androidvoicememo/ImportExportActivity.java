@@ -1,7 +1,6 @@
 package com.androidvoicememo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Environment;
@@ -92,7 +91,8 @@ public class ImportExportActivity extends ParentActivity {
                         if (file.createNewFile()) {
                             if (dbHelper.exportDB(file,db)) {
                                 Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Экспорт успешен. Файл находится вот тут: " + file.getAbsolutePath(), Toast.LENGTH_LONG);
+                                        getResources().getText(R.string.exportSuccess) + ": " +
+                                                file.getAbsolutePath(), Toast.LENGTH_SHORT);
                                 toast.show();
                             }
                         }
@@ -101,7 +101,7 @@ public class ImportExportActivity extends ParentActivity {
                     }
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "Для экспорта введите название будущего файла", Toast.LENGTH_LONG);
+                            getResources().getText(R.string.exportNameFile), Toast.LENGTH_LONG);
                     toast.show();
                 }
 
@@ -113,9 +113,8 @@ public class ImportExportActivity extends ParentActivity {
                             @Override
                             public void OnSelectedFile(String fileName) {
                                 importFileName = fileName;
-                                textView_SelectFile.setText("Был выбран файл :" + importFileName);
+                                textView_SelectFile.setText(getResources().getText(R.string.selectFile) + " :" + importFileName);
                                 btn_Import.setEnabled(true);
-                                //Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
                             }
                         });
                 fileDialog.show();
@@ -123,12 +122,12 @@ public class ImportExportActivity extends ParentActivity {
             case R.id.btn_Import:
                 if (dbHelper.importDB(new File(importFileName),db)) {
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "Импорт произошел успешно", Toast.LENGTH_SHORT);
+                            getResources().getText(R.string.importSuccess), Toast.LENGTH_SHORT);
                     toast.show();
                     isImport = true;
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "Импорт не удалось произвести, не корректная структура файла", Toast.LENGTH_SHORT);
+                            getResources().getText(R.string.importNotSuccess), Toast.LENGTH_SHORT);
                     toast.show();
                     isImport = true;
                 }

@@ -74,6 +74,34 @@
         <string name="export_import_TV_SelectFile">Файл не выбран...</string>
     <string name="action_settings">Настройки</string>
 
+    <!-- Toast сообщения -->
+    <string name="head_select_date">Введите будущую дату</string>
+    <string name="textNotRecognize">Текст не удалось распознать</string>
+    <string name="errorAudio">Ошибка записи звука с микрофона</string>
+    <string name="errorNetwork">Ошибка подключения к интернету. Проверьте подключение к интернету
+        и попробуйте снова.</string>
+    <string name="tryAgain">Попробовать снова</string>
+    <string name="errorRecognizeBusy">Сервер распознования речи на данный момент занят,
+        попробуйте пойзже.</string>
+    <string name="errorServer">Ошибка на стороне сервера. Проверьте подключение к интернету и
+        попробуйте снова.</string>
+    <string name="attention">Внимание</string>
+    <string name="weRecognize">Мы распознали текст, сохраните или отмените сохранение заметки</string>
+    <string name="install">Установить</string>
+    <string name="cancel">Отменить</string>
+    <string name="messageNeedInstall">Для распознавания речи необходимо установить приложение
+        "Google" с функцией голосового поиска.</string>
+    <string name="errorConnectionInternet">У вас отсутствует подключение к интернету, включите
+        его и попробуйте снова.</string>
+    <string name="exportSuccess">Экспорт успешен. Файл находится вот тут</string>
+    <string name="exportNameFile">Для экспорта введите название будущего файла</string>
+    <string name="selectFile">Был выбран файл</string>
+    <string name="importSuccess">Импорт произошел успешно</string>
+    <string name="importNotSuccess">Импорт не удалось произвести, не корректная структура файла</string>
+    <string name="saveNote">Заметка сохранена</string>
+    <string name="textSaveSuccess">Текст успешно скоппирован</string>
+
+
     <!-- id рекламного блока -->
     <string name="banner_ad_unit_id">ca-app-pub-3962065675469859/3569530194</string>
 
