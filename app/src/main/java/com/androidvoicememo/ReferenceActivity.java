@@ -14,7 +14,7 @@ public class ReferenceActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reference_activity);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop_main);
         setSupportActionBar(myToolbar);
     }
 

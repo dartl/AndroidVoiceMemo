@@ -8,13 +8,12 @@
     android:paddingLeft="@dimen/styleGawkMainPadding"
     android:paddingRight="@dimen/styleGawkMainPadding">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarTop"
+    <include
+        layout="@layout/action_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ActionBarTheme"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp" />
+        android:id="@+id/toolbarTop">
+    </include>
 
     <ScrollView
         android:layout_width="fill_parent" android:layout_height="match_parent"

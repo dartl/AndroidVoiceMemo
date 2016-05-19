@@ -1,7 +1,9 @@
 package com.androidvoicememo;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -36,9 +38,8 @@ public class MainActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop_main);
         setSupportActionBar(myToolbar);
-
         //
         listViewNodes = (ListView) findViewById(R.id.listViewNodes);
 

@@ -6,7 +6,15 @@
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/styleGawkMainPadding"
     android:background="@color/style_gawk_mainColor">
+    <include
+        layout="@layout/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbarTop">
+    </include>
+
     <FrameLayout
+        android:layout_below="@+id/toolbarTop"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,17 +23,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:background="@color/style_gawk_mainColor_bg">
-
-
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarTop"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ActionBarTheme"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:elevation="4dp" />
 
         <RelativeLayout
         android:layout_width="match_parent"

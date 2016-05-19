@@ -41,7 +41,7 @@ public class ImportExportActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.import_export_activity);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop_main);
         setSupportActionBar(myToolbar);
 
         /* Тестовое подключение к БД */

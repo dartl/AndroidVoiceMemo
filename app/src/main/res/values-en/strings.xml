@@ -63,6 +63,7 @@
     <string name="errorAudio">Error audio</string>
     <string name="errorNetwork">Error network</string>
     <string name="tryAgain">Try again</string>
+    <string name="inMainWindow">In the main window</string>
     <string name="errorRecognizeBusy">Error recognize busy</string>
     <string name="errorServer">Error server</string>
     <string name="attention">Attention</string>

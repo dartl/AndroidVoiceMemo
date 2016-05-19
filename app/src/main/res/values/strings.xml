@@ -17,7 +17,6 @@
         <string name="main_search">Поиск</string>
 
         <!-- Окно Сделать запись -->
-        <string name="addNote_record">Идёт запись: </string>
         <string name="addNote_save">Сохранить</string>
         <string name="addNote_cancel">Отменить</string>
         <string name="addNote_ready">Приготовьтесь...</string>
@@ -33,7 +32,6 @@
 
         <!-- Окно просмотреть запись -->
         <string name="viewNote_copy">Скопировать весь текст</string>
-        <string name="viewNote_listen">Прослушать</string>
         <string name="viewNote_deleteNote">Удалить</string>
 
         <!-- Окно справки -->
@@ -81,6 +79,7 @@
     <string name="errorNetwork">Ошибка подключения к интернету. Проверьте подключение к интернету
         и попробуйте снова.</string>
     <string name="tryAgain">Попробовать снова</string>
+    <string name="inMainWindow">В главное окно</string>
     <string name="errorRecognizeBusy">Сервер распознования речи на данный момент занят,
         попробуйте пойзже.</string>
     <string name="errorServer">Ошибка на стороне сервера. Проверьте подключение к интернету и

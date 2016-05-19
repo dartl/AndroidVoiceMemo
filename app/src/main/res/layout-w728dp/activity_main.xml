@@ -8,21 +8,20 @@
     android:paddingLeft="@dimen/styleGawkMainPadding"
     android:paddingRight="@dimen/styleGawkMainPadding"
     android:background="@color/style_gawk_mainColor">
+    <include
+        layout="@layout/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbarTop">
+    </include>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relativeLayoutSecond"
+        android:layout_below="@+id/toolbarTop"
         android:background="@color/style_gawk_mainColor_bg"
         android:layout_above="@+id/ad_view">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarTop"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ActionBarTheme"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:elevation="4dp" />
 
         <ListView
             android:layout_width="wrap_content"
@@ -30,7 +29,6 @@
             android:id="@+id/listViewNodes"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbarTop"
             android:divider="@null" android:dividerHeight="0dp"
             android:paddingLeft="@dimen/main_margin_list_node"
             android:paddingRight="@dimen/main_margin_list_node" />

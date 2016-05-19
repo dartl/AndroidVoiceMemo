@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +23,14 @@ public class ViewNoteActivity extends ParentActivity {
     private TextView viewNote_textVText;
     private Button btn_copyText;
     private Note note;
+    private TabHost tabHost_ViewNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_note_activity);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop_main);
         setSupportActionBar(myToolbar);
 
         /* Выводим данные полученные из основного списка */
@@ -65,6 +67,7 @@ public class ViewNoteActivity extends ParentActivity {
         super.onCreateOptionsMenu(menu);
         deleteNoteItem.setVisible(true);
         cancelItem.setVisible(true);
+        //exportImportItem.setVisible(false);
         return true;
     }
 

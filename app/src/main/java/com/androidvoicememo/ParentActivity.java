@@ -38,6 +38,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     protected MenuItem addItem;
     protected MenuItem cancelItem;
     protected MenuItem deleteNoteItem;
+    protected MenuItem exportImportItem;
 
     // Указатель на выборку заметок из БД
     protected Cursor cursor_Notes;
@@ -80,6 +81,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         cancelItem = menu.findItem(R.id.action_cancel);
         addItem = menu.findItem(R.id.app_name_addNote);
         deleteNoteItem = menu.findItem(R.id.action_deleteNote);
+        exportImportItem = menu.findItem(R.id.app_name_export_import);
 
         deleteNoteItem.setVisible(false);
         addItem.setVisible(false);
@@ -183,11 +185,13 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
             }
             if (data.getLongExtra("offsetTime", -1) > 0) {
                 long offset = data.getLongExtra("offsetTime",-1);
+                boolean voice = data.getBooleanExtra("voice", true);
+                boolean vibration = data.getBooleanExtra("vibration",true);
                 data.removeExtra("offsetTime");
                 Log.d("IMPORANT","Class MainActivity, line number - 250" + String.valueOf(offset));
                 cursor_Notes.moveToFirst();
                 Note note_s = new Note(cursor_Notes);
-                restartNotify(note_s,offset);
+                restartNotify(note_s,offset,voice,vibration);
             }
         } else if (requestCode == VIEW_NOTE && resultCode == RESULT_OK) {
             Note delete_note = (Note) data.getSerializableExtra("delete_note");
@@ -201,8 +205,8 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
                     "Запись удалена", Toast.LENGTH_SHORT);
             toast.show();
         } else if (requestCode == EXPORT_NOTE) {
-            cursor_Notes = getAllNotes();
-            sAdapterNotes.changeCursor(cursor_Notes);
+            /*cursor_Notes = getAllNotes();
+            sAdapterNotes.changeCursor(cursor_Notes);*/
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -213,10 +217,12 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
                 + " DESC", null);
     }
 
-    private void restartNotify(Note note, long offsetTime) {
+    private void restartNotify(Note note, long offsetTime, boolean voice, boolean vibration) {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, TimeNotification.class);
         intent.putExtra("note",note);
+        intent.putExtra("voice",voice);
+        intent.putExtra("vibration",vibration);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
                 intent, PendingIntent.FLAG_CANCEL_CURRENT );
         // На случай, если мы ранее запускали активити, а потом поменяли время,

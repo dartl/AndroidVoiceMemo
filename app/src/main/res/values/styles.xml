@@ -4,14 +4,15 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="actionBarStyle">@style/ActionBarTheme</item>
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+    </style>
+
+    <style name="WindowTitleBackground">
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:background">#007586</item>
-        <item name="android:textColorPrimary">@color/background_floating_material_light</item>
-        <item name="selectableItemBackground">?android:selectableItemBackground</item>
-        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
-        <item name="colorControlHighlight">@color/button_material_light</item>
+        <item name="android:popupBackground">@color/primary_dark_material_light</item>
     </style>
 
     <style name="gawk_style_button">
@@ -68,9 +69,19 @@
     <style name="gawk_addNote_textField">
         <item name="android:padding">6dp</item>
         <item name="android:background">#fff</item>
-
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
     </style>
 
+    <style name="gawk_addNote_toggleVoice">
+        <item name="android:textOff">Звук выкл.</item>
+        <item name="android:textOn">Звук вкл.</item>
+    </style>
+
+    <style name="gawk_addNote_toggleVibration">
+        <item name="android:textOff">Вибрация выкл.</item>
+        <item name="android:textOn">Вибрация вкл.</item>
+    </style>
 
 </resources>
 

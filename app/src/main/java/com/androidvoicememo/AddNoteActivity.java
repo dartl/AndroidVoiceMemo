@@ -1,5 +1,6 @@
 package com.androidvoicememo;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -22,10 +24,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.androidvoicememo.adapters.DatePickerFragment;
 import com.androidvoicememo.model.Note;
@@ -50,11 +54,16 @@ public class AddNoteActivity extends ParentActivity implements
     private RadioButton radioBtnRemember3;
     private RadioButton radioBtnRemember4;
     private RadioButton radioBtnRemember5;
+    private ToggleButton toggleButton_Vibration;
+    private ToggleButton toggleButton_Voice;
 
     /* Пермененые, относящиеся к записи звука */
     private String spokenText;
     AlertDialog aDialog;
     DialogFragment newFragment;
+
+    private boolean vibration;
+    private boolean voice;
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
@@ -69,6 +78,15 @@ public class AddNoteActivity extends ParentActivity implements
         super.onResume();
     }
 
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (speech != null) {
+            speech.stopListening();
+        }
+        super.onPause();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +94,9 @@ public class AddNoteActivity extends ParentActivity implements
 
         spokenText = (String) getResources().getText(R.string.textNotRecognize);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop_main);
         setSupportActionBar(myToolbar);
+
         /* Начало записи звука */
 
         /* Инициализируем окно для ошибки, чтобы не было NullPointerExeption */
@@ -93,7 +112,6 @@ public class AddNoteActivity extends ParentActivity implements
         radioBtnRemember3= (RadioButton) findViewById(R.id.radioBtnRemember3);
         radioBtnRemember4= (RadioButton) findViewById(R.id.radioBtnRemember4);
         radioBtnRemember5= (RadioButton) findViewById(R.id.radioBtnRemember5);
-
 
         radioGroupRemember.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -145,7 +163,24 @@ public class AddNoteActivity extends ParentActivity implements
                 spokenText = str;
             }
         });
-        
+
+        // кнопки toggle
+        toggleButton_Vibration = (ToggleButton) findViewById(R.id.toggleButton_Vibration);
+        toggleButton_Voice = (ToggleButton) findViewById(R.id.toggleButton_Voice);
+
+        toggleButton_Vibration.setOnCheckedChangeListener(new ToggleButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                vibration = isChecked;
+            }
+        });
+
+        toggleButton_Voice.setOnCheckedChangeListener(new ToggleButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                voice = isChecked;
+            }
+        });
     }
 
     @Override
@@ -162,6 +197,8 @@ public class AddNoteActivity extends ParentActivity implements
                 intent.putExtra("new_note", note);
                 if (offsetTime > 0) {
                     intent.putExtra("offsetTime", offsetTime);
+                    intent.putExtra("voice",voice);
+                    intent.putExtra("vibration",vibration);
                     Log.d("IMPORANT", "Class AddNoteActivity, line number - 159" +
                             String.valueOf(offsetTime));
                 }
@@ -362,28 +399,46 @@ public class AddNoteActivity extends ParentActivity implements
         return false;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void textRecognizer() {
-        if (isSpeechRecognitionActivityPresented(this)) {
-            if (speech == null) {
-                speech = SpeechRecognizer.createSpeechRecognizer(this);
-                speech.setRecognitionListener(this);
-                recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-                speech.startListening(recognizerIntent);
+        if (hasConnection(this)) {
+            if (isSpeechRecognitionActivityPresented(this)) {
+                if (speech == null) {
+                    speech = SpeechRecognizer.createSpeechRecognizer(this);
+                    speech.setRecognitionListener(this);
+                    recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+                    speech.startListening(recognizerIntent);
+                } else {
+                    speech.startListening(recognizerIntent);
+                }
             } else {
-                speech.startListening(recognizerIntent);
+
+                    installGoogleVoiceSearch(AddNoteActivity.this);
+
             }
         } else {
-            if (hasConnection(this)) {
-                installGoogleVoiceSearch(AddNoteActivity.this);
-            } else {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.
-                        setMessage(getResources().getText(R.string.errorConnectionInternet)).
-                        setTitle(getResources().getText(R.string.attention));
-            }
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.
+                    setMessage(getResources().getText(R.string.errorConnectionInternet)).
+                    setTitle(getResources().getText(R.string.attention));
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    finish();
+                }
+            });
+            dialog.setPositiveButton(getResources().getText(R.string.inMainWindow), new DialogInterface.OnClickListener() {    // положительная кнопка
+
+                // обработчик нажатия на кнопку Установить
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            dialog.show();
         }
     }
 
