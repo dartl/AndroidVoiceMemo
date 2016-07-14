@@ -47,8 +47,7 @@ import java.util.List;
 /**
  * Created by Dartl on 03.03.2016.
  */
-public class AddNoteActivity extends ParentActivity implements
-        RecognitionListener {
+public class AddNoteActivity extends ParentActivity {
 
     private Button btn_addNote_save;
     private EditText recognizeText;
@@ -66,14 +65,9 @@ public class AddNoteActivity extends ParentActivity implements
     private String spokenText;
     AlertDialog aDialog;
     DialogFragment newFragment;
-    private File file;
-    private BufferedWriter bw;
 
     private boolean vibration;
     private boolean voice;
-
-    private SpeechRecognizer speech = null;
-    private Intent recognizerIntent;
 
     @Override
     protected void onStart() {
@@ -88,19 +82,11 @@ public class AddNoteActivity extends ParentActivity implements
     /** Called when leaving the activity */
     @Override
     public void onPause() {
-        if (speech != null) {
-            speech.stopListening();
-        }
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        try {
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         super.onStop();
     }
 
@@ -110,35 +96,16 @@ public class AddNoteActivity extends ParentActivity implements
         setContentView(R.layout.add_note);
 
         spokenText = (String) getResources().getText(R.string.textNotRecognize);
-        file = new File(Environment.getExternalStorageDirectory() + "/log_voice_notes.txt");
-        try {
-            file.delete();
-            file.createNewFile();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // открываем поток для записи
-        try {
-            bw = new BufferedWriter(new FileWriter(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // пишем данные
-        loget("Открыто окно создания заметки");
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop_main);
         setSupportActionBar(myToolbar);
-        loget("Был выбран action bar");
 
         /* Начало записи звука */
 
         /* Инициализируем окно для ошибки, чтобы не было NullPointerExeption */
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         aDialog = dialog.create();
-        loget("Сейчас будет вызван textRecognizer()");
         textRecognizer();
-        loget("Закончен вызов textRecognizer()");
         /* радио групп */
         radioGroupRemember = (RadioGroup) findViewById(R.id.radioGroupRemember);
         radioBtnRemember1 = (RadioButton) findViewById(R.id.radioBtnRemember1);
@@ -246,117 +213,6 @@ public class AddNoteActivity extends ParentActivity implements
         }
     }
 
-
-    @Override
-    public void onReadyForSpeech(Bundle params) {
-        recognizeText.setText(getResources().getText(R.string.addNote_recognitionText));
-    }
-
-    @Override
-    public void onBeginningOfSpeech() {
-
-    }
-
-    @Override
-    public void onRmsChanged(float rmsdB) {
-
-    }
-
-    @Override
-    public void onBufferReceived(byte[] buffer) {
-        Log.d("Speech", "onBufferReceived");
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-        if (spokenText == null) {
-            spokenText = (String) getResources().getText(R.string.textNotRecognize);
-            recognizeText.setText(spokenText);
-        }
-    }
-
-    @Override
-    public void onError(int error) {
-        String message;
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        switch (error) {
-            case SpeechRecognizer.ERROR_AUDIO:
-                message = (String) getResources().getText(R.string.errorAudio);
-                break;
-            case SpeechRecognizer.ERROR_CLIENT:
-                message = "Client side error";
-                break;
-            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-                message = "Insufficient permissions";
-                break;
-            case SpeechRecognizer.ERROR_NETWORK:
-                message = (String) getResources().getText(R.string.errorNetwork);
-                break;
-            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-                message = "Network timeout";
-                break;
-            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-            case SpeechRecognizer.ERROR_NO_MATCH:
-                message = (String) getResources().getText(R.string.textNotRecognize);
-                spokenText = (String) getResources().getText(R.string.textNotRecognize);
-                recognizeText.setText(spokenText);
-                dialog.setPositiveButton(getResources().getText(R.string.tryAgain), new DialogInterface.OnClickListener() {    // положительная кнопка
-
-                    // обработчик нажатия на кнопку Установить
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        textRecognizer();
-                    }
-                });
-                break;
-            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                message = (String) getResources().getText(R.string.errorRecognizeBusy);
-                break;
-            case SpeechRecognizer.ERROR_SERVER:
-                message = (String) getResources().getText(R.string.errorServer);
-                break;
-            default:
-                message = (String) getResources().getText(R.string.textNotRecognize);
-                break;
-        }
-
-        dialog.setMessage(message)	// сообщение
-                .setTitle(getResources().getText(R.string.attention));
-        if(!aDialog.isShowing()) {
-            aDialog = dialog.show();
-        }
-
-    }
-
-    @Override
-    public void onResults(Bundle results) {
-        ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        spokenText = matches.get(0);
-
-        if (spokenText == null) {
-            spokenText = (String) getResources().getText(R.string.textNotRecognize);
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    getResources().getText(R.string.weRecognize), Toast.LENGTH_SHORT);
-            toast.show();
-        }
-        spokenText = spokenText.toLowerCase();
-        recognizeText.setText(spokenText);
-        /* включаем неактивные кнопку Сохранить и распознанный текст */
-        speech.cancel();
-        speech.destroy();
-    }
-
-    @Override
-    public void onPartialResults(Bundle partialResults) {
-    }
-
-    @Override
-    public void onEvent(int eventType, Bundle params) {
-    }
-
-
     /**
      * Checks availability of speech recognizing Activity
      *
@@ -365,7 +221,6 @@ public class AddNoteActivity extends ParentActivity implements
      */
     private boolean isSpeechRecognitionActivityPresented(Activity callerActivity) {
         try {
-            loget("Вызвана функция isSpeechRecognitionActivityPresented()");
             // getting an instance of package manager
             PackageManager pm = callerActivity.getPackageManager();
             // a list of activities, which can process speech recognition Intent
@@ -374,9 +229,7 @@ public class AddNoteActivity extends ParentActivity implements
             if (activities.size() != 0) {    // if list not empty
                 return true;                // then we can recognize the speech
             }
-            loget("Закончен вызов функции isSpeechRecognitionActivityPresented()");
         } catch (Exception e) {
-            loget("Вызвана ошибка в функции isSpeechRecognitionActivityPresented()");
         }
 
         return false; // we have no activities to recognize the speech
@@ -418,55 +271,42 @@ public class AddNoteActivity extends ParentActivity implements
 
     public boolean hasConnection(final Context context)
     {
-        loget("Вызвана функция hasConnection()");
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (wifiInfo != null && wifiInfo.isConnected())
         {
-            loget("Доступно подключение по wi-fi");
             return true;
         }
         wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if (wifiInfo != null && wifiInfo.isConnected())
         {
-            loget("Доступно подключение по телефону");
             return true;
         }
         wifiInfo = cm.getActiveNetworkInfo();
         if (wifiInfo != null && wifiInfo.isConnected())
         {
-            loget("Доступно пожключение к интернету");
             return true;
         }
-        loget("Закончен вызов hasConnection()");
         return false;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void textRecognizer() {
-
-            loget("Доступ к интернету есть");
             if (isSpeechRecognitionActivityPresented(this)) {
-                loget("Возможность распознавать текст получена");
-                if (speech == null) {
-                    loget("Создаем новые компоненты для распознования речи");
-                    speech = SpeechRecognizer.createSpeechRecognizer(this);
-                    speech.setRecognitionListener(this);
-                    recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-                    speech.startListening(recognizerIntent);
-                } else {
-                    loget("Включаем распознование речи");
-                    speech.startListening(recognizerIntent);
-                }
+                // создаем Intent с действием RecognizerIntent.ACTION_RECOGNIZE_SPEECH
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+                // добавляем дополнительные параметры:
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Голосовой поиск Inforino");	// текстовая подсказка пользователю
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);	// модель распознавания оптимальная для распознавания коротких фраз-поисковых запросов
+                intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);	// количество результатов, которое мы хотим получить, в данном случае хотим только первый - самый релевантный
+
+                // стартуем Activity и ждем от нее результата
+                this.startActivityForResult(intent, 101);
             } else {
                 if (hasConnection(this)) {
-                    loget("Возможность распознавать текст нет");
                     installGoogleVoiceSearch(AddNoteActivity.this);
                 } else {
-                    loget("Доступ к интернету нет");
                     AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                     dialog.
                             setMessage(getResources().getText(R.string.errorConnectionInternet)).
@@ -514,15 +354,21 @@ public class AddNoteActivity extends ParentActivity implements
         return true;
     }
 
-    private void loget(String text) {
-        Date d = new Date();
-        SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy hh:mm ss");
-        try {
-            bw.write(format1.format(d));
-            bw.write(": " + text);
-            bw.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // если это результаты распознавания речи
+        // и процесс распознавания прошел успешно
+        if (requestCode == 101 && resultCode == RESULT_OK) {
+
+            // получаем список текстовых строк - результат распознавания
+            // строк может быть несколько, так как не всегда удается точно распознать речь
+            // более релевантные результаты идут в начале списка
+            ArrayList matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+            recognizeText.setText(matches.get(0).toString());
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
