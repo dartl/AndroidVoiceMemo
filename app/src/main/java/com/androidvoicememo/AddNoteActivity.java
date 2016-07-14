@@ -14,6 +14,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -34,6 +35,10 @@ import android.widget.ToggleButton;
 import com.androidvoicememo.adapters.DatePickerFragment;
 import com.androidvoicememo.model.Note;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +66,8 @@ public class AddNoteActivity extends ParentActivity implements
     private String spokenText;
     AlertDialog aDialog;
     DialogFragment newFragment;
+    private File file;
+    private BufferedWriter bw;
 
     private boolean vibration;
     private boolean voice;
@@ -88,23 +95,50 @@ public class AddNoteActivity extends ParentActivity implements
     }
 
     @Override
+    public void onStop() {
+        try {
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onStop();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_note);
 
         spokenText = (String) getResources().getText(R.string.textNotRecognize);
+        file = new File(Environment.getExternalStorageDirectory() + "/log_voice_notes.txt");
+        try {
+            file.delete();
+            file.createNewFile();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // открываем поток для записи
+        try {
+            bw = new BufferedWriter(new FileWriter(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // пишем данные
+        loget("Открыто окно создания заметки");
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarTop_main);
         setSupportActionBar(myToolbar);
+        loget("Был выбран action bar");
 
         /* Начало записи звука */
 
         /* Инициализируем окно для ошибки, чтобы не было NullPointerExeption */
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         aDialog = dialog.create();
-
+        loget("Сейчас будет вызван textRecognizer()");
         textRecognizer();
-
+        loget("Закончен вызов textRecognizer()");
         /* радио групп */
         radioGroupRemember = (RadioGroup) findViewById(R.id.radioGroupRemember);
         radioBtnRemember1 = (RadioButton) findViewById(R.id.radioBtnRemember1);
@@ -190,7 +224,9 @@ public class AddNoteActivity extends ParentActivity implements
             case R.id.btn_addNote_save:
                 //speech.stopListening();
                 long date = System.currentTimeMillis();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy k:mm");
+                //date -= 864000000;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy k:mm");
+
                 String dateString = dateFormat.format(date);
                 Note note = new Note(-1, "", spokenText, dateString);
                 Intent intent = new Intent();
@@ -327,8 +363,9 @@ public class AddNoteActivity extends ParentActivity implements
      * @param callerActivity – Activity that called the checking
      * @return true – if Activity there available, false – if Activity is absent
      */
-    private static boolean isSpeechRecognitionActivityPresented(Activity callerActivity) {
+    private boolean isSpeechRecognitionActivityPresented(Activity callerActivity) {
         try {
+            loget("Вызвана функция isSpeechRecognitionActivityPresented()");
             // getting an instance of package manager
             PackageManager pm = callerActivity.getPackageManager();
             // a list of activities, which can process speech recognition Intent
@@ -337,8 +374,9 @@ public class AddNoteActivity extends ParentActivity implements
             if (activities.size() != 0) {    // if list not empty
                 return true;                // then we can recognize the speech
             }
+            loget("Закончен вызов функции isSpeechRecognitionActivityPresented()");
         } catch (Exception e) {
-
+            loget("Вызвана ошибка в функции isSpeechRecognitionActivityPresented()");
         }
 
         return false; // we have no activities to recognize the speech
@@ -378,32 +416,40 @@ public class AddNoteActivity extends ParentActivity implements
         dialog.show();	// показываем диалог
     }
 
-    public static boolean hasConnection(final Context context)
+    public boolean hasConnection(final Context context)
     {
+        loget("Вызвана функция hasConnection()");
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (wifiInfo != null && wifiInfo.isConnected())
         {
+            loget("Доступно подключение по wi-fi");
             return true;
         }
         wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if (wifiInfo != null && wifiInfo.isConnected())
         {
+            loget("Доступно подключение по телефону");
             return true;
         }
         wifiInfo = cm.getActiveNetworkInfo();
         if (wifiInfo != null && wifiInfo.isConnected())
         {
+            loget("Доступно пожключение к интернету");
             return true;
         }
+        loget("Закончен вызов hasConnection()");
         return false;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void textRecognizer() {
-        if (hasConnection(this)) {
+
+            loget("Доступ к интернету есть");
             if (isSpeechRecognitionActivityPresented(this)) {
+                loget("Возможность распознавать текст получена");
                 if (speech == null) {
+                    loget("Создаем новые компоненты для распознования речи");
                     speech = SpeechRecognizer.createSpeechRecognizer(this);
                     speech.setRecognitionListener(this);
                     recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -412,34 +458,36 @@ public class AddNoteActivity extends ParentActivity implements
                     recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
                     speech.startListening(recognizerIntent);
                 } else {
+                    loget("Включаем распознование речи");
                     speech.startListening(recognizerIntent);
                 }
             } else {
-
+                if (hasConnection(this)) {
+                    loget("Возможность распознавать текст нет");
                     installGoogleVoiceSearch(AddNoteActivity.this);
+                } else {
+                    loget("Доступ к интернету нет");
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                    dialog.
+                            setMessage(getResources().getText(R.string.errorConnectionInternet)).
+                            setTitle(getResources().getText(R.string.attention));
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            finish();
+                        }
+                    });
+                    dialog.setPositiveButton(getResources().getText(R.string.inMainWindow), new DialogInterface.OnClickListener() {    // положительная кнопка
 
+                        // обработчик нажатия на кнопку Установить
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    dialog.show();
+                }
             }
-        } else {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.
-                    setMessage(getResources().getText(R.string.errorConnectionInternet)).
-                    setTitle(getResources().getText(R.string.attention));
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    finish();
-                }
-            });
-            dialog.setPositiveButton(getResources().getText(R.string.inMainWindow), new DialogInterface.OnClickListener() {    // положительная кнопка
-
-                // обработчик нажатия на кнопку Установить
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
-            dialog.show();
-        }
     }
 
     /* Функция для получения данных о дате заметки */
@@ -466,4 +514,15 @@ public class AddNoteActivity extends ParentActivity implements
         return true;
     }
 
+    private void loget(String text) {
+        Date d = new Date();
+        SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy hh:mm ss");
+        try {
+            bw.write(format1.format(d));
+            bw.write(": " + text);
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
