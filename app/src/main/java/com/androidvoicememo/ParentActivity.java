@@ -282,16 +282,16 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         String button2String = "Отмена";
 
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
-        ad.setTitle(title);  // заголовок
-        ad.setMessage(message); // сообщение
-        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+        ad.setTitle(getResources().getText(R.string.vote_textHeader));  // заголовок
+        ad.setMessage(getResources().getText(R.string.vote_textBody)); // сообщение
+        ad.setPositiveButton(getResources().getText(R.string.vote_textOk), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 Intent i = new Intent(android.content.Intent.ACTION_VIEW);
                 i.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.gawk.voicenotes"));
                 startActivity(i);
             }
         });
-        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+        ad.setNegativeButton(getResources().getText(R.string.vote_textCancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 dialog.cancel();
             }

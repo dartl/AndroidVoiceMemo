@@ -29,6 +29,7 @@
         <string name="addNote_remember_custom">выбрать дату и время</string>
         <string name="addNote_remember_button_ok">Выбрать</string>
         <string name="addNote_remember_button_cancel">Отмена</string>
+        <string name="addNote_sayFullText">Произнесите заметку полностью</string>
 
         <!-- Окно просмотреть запись -->
         <string name="viewNote_copy">Скопировать весь текст</string>
@@ -103,5 +104,12 @@
 
     <!-- id рекламного блока -->
     <string name="banner_ad_unit_id">ca-app-pub-3962065675469859/3569530194</string>
+
+    <!-- Предложение проголосовать и оставить отзыв -->
+    <string name="vote_textHeader">Вам понравилось наше приложение?</string>
+    <string name="vote_textBody">Если вам понравилось наше приложение, проголосуйте на Google play
+        и оставьте свой отзыв, мы будем вам очень благодарны</string>
+    <string name="vote_textOk">Поставить 5 звёзд</string>
+    <string name="vote_textCancel">Отмена</string>
 
 </resources>

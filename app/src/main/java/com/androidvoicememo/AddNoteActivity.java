@@ -299,7 +299,7 @@ public class AddNoteActivity extends ParentActivity {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
                 // добавляем дополнительные параметры:
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Голосовой поиск Inforino");	// текстовая подсказка пользователю
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getResources().getText(R.string.addNote_sayFullText));	// текстовая подсказка пользователю
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);	// модель распознавания оптимальная для распознавания коротких фраз-поисковых запросов
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);	// количество результатов, которое мы хотим получить, в данном случае хотим только первый - самый релевантный
 

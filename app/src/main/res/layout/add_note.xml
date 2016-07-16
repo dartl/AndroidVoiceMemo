@@ -144,7 +144,9 @@
                 android:layout_marginTop="@dimen/addNote_heading_top_margin"
                 android:autoText="false"
                 android:enabled="true"
-                style="@style/gawk_addNote_textField"></EditText>
+                style="@style/gawk_addNote_textField"
+                android:paddingTop="0dp"
+                android:background="@drawable/texteditbg"></EditText>
     </LinearLayout>
 
         <ToggleButton
