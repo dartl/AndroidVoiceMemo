@@ -154,12 +154,14 @@ public class AddNoteActivity extends ParentActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 String str = s.toString();
+
                 str.toLowerCase();
                 spokenText = str;
             }
@@ -292,7 +294,7 @@ public class AddNoteActivity extends ParentActivity {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void textRecognizer() {
-            if (isSpeechRecognitionActivityPresented(this)) {
+            if (isSpeechRecognitionActivityPresented(this) && hasConnection(this)) {
                 // создаем Intent с действием RecognizerIntent.ACTION_RECOGNIZE_SPEECH
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 

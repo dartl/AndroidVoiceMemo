@@ -20,7 +20,7 @@
     <!-- Окно Сделать запись -->
     <string name="addNote_save">Save</string>
     <string name="addNote_cancel">Cancel</string>
-    <string name="addNote_ready">Text your note...</string>
+    <string name="addNote_ready"></string>
     <string name="addNote_recognitionText">Speak, and we will try to recognize the text...</string>
     <string name="addNote_remember">Remind you?</string>
     <string name="addNote_remember_30">30 minutes</string>

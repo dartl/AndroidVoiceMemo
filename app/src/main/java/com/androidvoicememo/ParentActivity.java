@@ -5,12 +5,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -23,6 +27,7 @@ import com.androidvoicememo.adapters.CursorNoteAdapter;
 import com.androidvoicememo.adapters.TimeNotification;
 import com.androidvoicememo.db.SQLiteDBHelper;
 import com.androidvoicememo.model.Note;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Created by Dartl on 03.05.2016.
@@ -51,10 +56,17 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
 
     protected Menu ActionBarMenu;
 
+    private SharedPreferences sPref;
+    final String INSTALL_PREF = "install_prilogenie";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sPref = getPreferences(MODE_PRIVATE);
+        // Obtain the FirebaseAnalytics instance.
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Log.d("IMPORTANT", "Программа запустилась");
         /* Тестовое подключение к БД */
@@ -179,6 +191,18 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
                 db.insert(SQLiteDBHelper.NOTES_TABLE_NAME, null, newValues);
                 cursor_Notes = getAllNotes();
                 sAdapterNotes.changeCursor(cursor_Notes);
+                boolean boolInstall = sPref.getBoolean(INSTALL_PREF,false);
+
+                boolean b = cursor_Notes.getCount() >= 2 && !boolInstall;
+                Log.d("IMPORTANT", "Значение: " + b);
+                Log.d("IMPORTANT", "Значение cursor_Notes.getCount(): " + cursor_Notes.getCount());
+                Log.d("IMPORTANT", "Значение boolInstall: " + boolInstall);
+                if (cursor_Notes.getCount() >= 2 && !boolInstall) {
+                    showVote();
+                    SharedPreferences.Editor ed = sPref.edit();
+                    ed.putBoolean(INSTALL_PREF,true);
+                    ed.commit();
+                }
                 Toast toast = Toast.makeText(getApplicationContext(),
                         getResources().getText(R.string.saveNote), Toast.LENGTH_SHORT);
                 toast.show();
@@ -230,5 +254,38 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         am.cancel(pendingIntent);
         // Устанавливаем разовое напоминание
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + offsetTime, pendingIntent);
+    }
+
+    private void showVote() {
+        Log.d("IMPORTANT", "showVote() вызвано");
+        Context context = ParentActivity.this;
+        String title = "Вам понравилось наше приложение?";
+        String message = "Если вам понравилось наше приложение, проголосуйте на Google play и оставьте свой отзыв, " +
+                "мы будем вам очень благодарны";
+        String button1String = "Поставить 5 звёзд";
+        String button2String = "Отмена";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setTitle(title);  // заголовок
+        ad.setMessage(message); // сообщение
+        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Intent i = new Intent(android.content.Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.gawk.voicenotes"));
+                startActivity(i);
+            }
+        });
+        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                dialog.cancel();
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+                dialog.cancel();
+            }
+        });
+        ad.show();
     }
 }

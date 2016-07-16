@@ -21,35 +21,32 @@
         android:layout_height="match_parent"
         android:id="@+id/relativeLayoutSecond"
         android:layout_below="@+id/toolbarTop"
-        android:background="@color/style_gawk_mainColor_bg"
-        android:layout_above="@+id/ad_view">
-
+        android:layout_above="@+id/adsBar"
+        android:background="@color/style_gawk_mainColor_bg">
 
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/listViewNodes"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
 
             android:divider="@null" android:dividerHeight="0dp"
             android:paddingLeft="@dimen/main_margin_list_node"
-            android:paddingRight="@dimen/main_margin_list_node" />
+            android:paddingRight="@dimen/main_margin_list_node"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" />
 
     </RelativeLayout>
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/ad_view"
+
+    <include
+        layout="@layout/ads_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:id="@+id/adsBar"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="2dp"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id" />
-
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </include>
 
 
 </RelativeLayout>
