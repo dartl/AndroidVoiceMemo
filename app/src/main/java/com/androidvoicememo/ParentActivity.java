@@ -199,6 +199,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
                 Log.d("IMPORTANT", "Значение boolInstall: " + boolInstall);
                 if (cursor_Notes.getCount() >= 2 && !boolInstall) {
                     showVote();
+                    installIcon();
                     SharedPreferences.Editor ed = sPref.edit();
                     ed.putBoolean(INSTALL_PREF,true);
                     ed.commit();
@@ -256,8 +257,23 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + offsetTime, pendingIntent);
     }
 
+    private void installIcon() {
+        //where this is a context (e.g. your current activity)
+        final Intent shortcutIntent = new Intent(this, MainActivity.class);
+
+        final Intent intent = new Intent();
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        // Sets the custom shortcut's title
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.app_name));
+        // Set the custom shortcut icon
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(this, R.drawable.icon175x175_big));
+        // add the shortcut
+        intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        sendBroadcast(intent);
+    }
+
     private void showVote() {
-        Log.d("IMPORTANT", "showVote() вызвано");
+        //Log.d("IMPORTANT", "showVote() вызвано");
         Context context = ParentActivity.this;
         String title = "Вам понравилось наше приложение?";
         String message = "Если вам понравилось наше приложение, проголосуйте на Google play и оставьте свой отзыв, " +
