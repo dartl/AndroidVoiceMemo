@@ -1,0 +1,116 @@
+<resources>
+    <!-- Названия окон -->
+    <string name="app_name">Голосовые заметки</string>
+    <string name="app_name_addNote">Создать заметку</string>
+    <string name="app_name_viewNote">Просмотр заметки</string>
+    <string name="app_name_searchNote">Поиск по заметкам</string>
+    <string name="app_name_settings">Настройки</string>
+    <string name="app_name_export_import">Импорт/экспорт</string>
+    <string name="app_name_reference">Справка</string>
+    <string name="app_exit">Выход</string>
+
+
+    <!-- Остальное -->
+        <string name="main_add_memo">Сделать заметку</string>
+        <string name="main_delete_note">Удалить</string>
+        <string name="main_searchPhrase">Поиск...</string>
+        <string name="main_search">Поиск</string>
+
+        <!-- Окно Сделать запись -->
+        <string name="addNote_save">Сохранить</string>
+        <string name="addNote_cancel">Отменить</string>
+        <string name="addNote_ready"></string>
+        <string name="addNote_recognitionText">Говорите, а мы попытаемся распознать текст...</string>
+        <string name="addNote_remember">Напомнить Вам?</string>
+        <string name="addNote_remember_30">через 30 минут</string>
+        <string name="addNote_remember_60">через 1 час</string>
+        <string name="addNote_remember_12">через 12 часов</string>
+        <string name="addNote_remember_not">не напоминать</string>
+        <string name="addNote_remember_custom">выбрать дату и время</string>
+        <string name="addNote_remember_button_ok">Выбрать</string>
+        <string name="addNote_remember_button_cancel">Отмена</string>
+        <string name="addNote_sayFullText">Произнесите заметку полностью</string>
+
+        <!-- Окно просмотреть запись -->
+        <string name="viewNote_copy">Скопировать весь текст</string>
+        <string name="viewNote_deleteNote">Удалить</string>
+
+        <!-- Окно справки -->
+        <string name="reference_AddNote_header">Добавление заметки</string>
+        <string name="reference_AddNote_body">Для добавления новой заметки нажмите на кнопку
+            "Создать заметку" в главном окне приложения, либо выбрав соответствующий пункт меню.\nВ
+            появившемся окне дождитесь запуска таймера и сообщения, что можно говорить и
+            произнесите вашу заметку.\nПосле чего дождитесь, пока приложение распознает ваш голос и
+            выведет соответствующий текст в поле нижней части экрана. Для более корректного и
+            правильного распознавания старайтесь говорить четко и громко. Теперь вы можете выбрать -
+            стоит ли напомнить вам о заметке. Для сохранения нажмите кнопку "Сохранить", для отмены
+            сохранения "Отмена".\nЕсли текст заметки распознать не удалось, нажмите "Отмена" и
+            повторите создание заметки.</string>
+        <string name="reference_Serach_header">Поиск по заметкам</string>
+        <string name="reference_Serach_body">Для поиска по заметкам введите искомую фразу в
+            текстовое поле на главной странице. После чего нажмите "Найти", под полем поиска
+            отобразятся все заметки, содержащие в себе искомую фразу.\nМожет быть случай, когда
+            искомая фраза находится в полном описании заметки, поэтому в кратком содержании её
+            нету.\nЧтобы просмотреть полное содержание - кликните на интересующую вас
+            заметку.\nЧтобы сбросить параметры поиска нажмите кнопку "Сброс".</string>
+        <string name="reference_ViewNote_header">Просмотр заметки</string>
+        <string name="reference_ViewNote_body">Для просмотра полного текста заметки кликните по
+            интересующей вас заметки в главном окне приложения. Откроется полное описание заметки.</string>
+        <string name="reference_DeleteNote_header">Удаление заметки</string>
+        <string name="reference_DeleteNote_body">Для удаления заметки, зайде в полное описание
+            заметки и нажмите на кнопку "Удалить" в верхней правой части окна.</string>
+        <string name="reference_CopyNote_header">Скоппировать текст заметки</string>
+        <string name="reference_CopyNote_body">Для того, чтобы скоппировать полный текст заметки,
+            зайдите в полное описание заметки и нажминте на кнопку "Коппировать текст заметки"</string>
+
+        <!-- Окно импорт/экспорт -->
+        <string name="export_import_Import">Импорт</string>
+        <string name="export_import_Export">Экспорт</string>
+        <string name="export_import_ExportAction">Экспортировать</string>
+        <string name="export_import_ImportAction">Импортировать</string>
+        <string name="export_import_NamingFile">Название файла:</string>
+        <string name="export_import_SelectFile">Выбрать файл</string>
+        <string name="export_import_TV_SelectFile">Файл не выбран...</string>
+    <string name="action_settings">Настройки</string>
+
+    <!-- Toast сообщения -->
+    <string name="head_select_date">Введите будущую дату</string>
+    <string name="textNotRecognize">Текст не удалось распознать</string>
+    <string name="errorAudio">Ошибка записи звука с микрофона</string>
+    <string name="errorNetwork">Ошибка подключения к интернету. Проверьте подключение к интернету
+        и попробуйте снова.</string>
+    <string name="tryAgain">Попробовать снова</string>
+    <string name="inMainWindow">В главное окно</string>
+    <string name="errorRecognizeBusy">Сервер распознования речи на данный момент занят,
+        попробуйте пойзже.</string>
+    <string name="errorServer">Ошибка на стороне сервера. Проверьте подключение к интернету и
+        попробуйте снова.</string>
+    <string name="attention">Внимание</string>
+    <string name="weRecognize">Мы распознали текст, сохраните или отмените сохранение заметки</string>
+    <string name="install">Установить</string>
+    <string name="cancel">Отменить</string>
+    <string name="messageNeedInstall">Для распознавания речи необходимо установить приложение
+        "Google" с функцией голосового поиска.</string>
+    <string name="errorConnectionInternet">Для распознования необходимо подключение к интернету,
+        но вы можете создать заметку, набрав её вручную.</string>
+    <string name="create_Note_NoInternet">Всё равно создать</string>
+    <string name="exportSuccess">Экспорт успешен. Файл находится вот тут</string>
+    <string name="exportNameFile">Для экспорта введите название будущего файла</string>
+    <string name="selectFile">Был выбран файл</string>
+    <string name="importSuccess">Импорт произошел успешно</string>
+    <string name="importNotSuccess">Импорт не удалось произвести, не корректная структура файла</string>
+    <string name="saveNote">Заметка сохранена</string>
+    <string name="textSaveSuccess">Текст успешно скоппирован</string>
+
+
+    <!-- id рекламного блока -->
+    <string name="banner_ad_unit_id">ca-app-pub-3962065675469859/3569530194</string>
+
+    <!-- Предложение проголосовать и оставить отзыв -->
+    <string name="vote_textHeader">Вам понравилось наше приложение?</string>
+    <string name="vote_textBody">Если вам понравилось наше приложение, проголосуйте на Google play
+        и оставьте свой отзыв, мы будем вам очень благодарны</string>
+    <string name="vote_textOk">Поставить 5 звёзд</string>
+    <string name="vote_textCancel">Отмена</string>
+
+</resources>

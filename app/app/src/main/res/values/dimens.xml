@@ -1,0 +1,26 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">14dp</dimen>
+    <dimen name="activity_vertical_margin">14dp</dimen>
+
+    <!-- Размеры окно просмотра -->
+    <dimen name="viewNote_heading_size">16sp</dimen>
+    <dimen name="viewNote_body_size">24sp</dimen>
+    <dimen name="viewNote_padding">6dp</dimen>
+
+    <!-- Размеры основное окно -->
+    <dimen name="main_heading_size">24sp</dimen>
+    <dimen name="main_padding_button">18dp</dimen>
+    <dimen name="main_padding_list_node">12dp</dimen>
+    <dimen name="main_margin_list_node">6dp</dimen>
+
+    <!-- Размеры окно добавления заметки -->
+    <dimen name="addNote_body_size">18sp</dimen>
+    <dimen name="addNote_heading_size">24sp</dimen>
+    <dimen name="addNote_button_padding">22dp</dimen>
+    <dimen name="addNote_button_paddingTop">18dp</dimen>
+    <dimen name="addNote_heading_top_margin">6dp</dimen>
+    <dimen name="addNote_padding">6dp</dimen>
+
+    <dimen name="styleGawkMainPadding">2dp</dimen>
+</resources>
