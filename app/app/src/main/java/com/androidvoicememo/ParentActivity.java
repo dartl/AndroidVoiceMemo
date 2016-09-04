@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.androidvoicememo.adapters.CursorNoteAdapter;
@@ -41,6 +42,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     protected static final int SLOT_ID = 56741;
 
     protected MenuItem searchItem;
+    protected MenuItem saveNote;
     protected MenuItem addItem;
     protected MenuItem cancelItem;
     protected MenuItem deleteNoteItem;
@@ -65,6 +67,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         sPref = getPreferences(MODE_PRIVATE);
         // Obtain the FirebaseAnalytics instance.
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -84,6 +87,12 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
+    protected void onResume() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        super.onResume();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -95,10 +104,12 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         addItem = menu.findItem(R.id.app_name_addNote);
         deleteNoteItem = menu.findItem(R.id.action_deleteNote);
         exportImportItem = menu.findItem(R.id.app_name_export_import);
+        saveNote = menu.findItem(R.id.action_saveNote);
 
         deleteNoteItem.setVisible(false);
         addItem.setVisible(false);
         cancelItem.setVisible(false);
+        saveNote.setVisible(false);
 
         SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
@@ -237,6 +248,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     protected Cursor getAllNotes() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         return db.rawQuery("SELECT * FROM " +
                 SQLiteDBHelper.NOTES_TABLE_NAME + " ORDER BY " + SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE
                 + " DESC", null);

@@ -35,6 +35,7 @@
     <!-- Окно просмотреть запись -->
     <string name="viewNote_copy">Copy all</string>
     <string name="viewNote_deleteNote">Delete</string>
+    <string name="viewNote_saveNote">Save</string>
 
     <!-- Окно справки -->
     <string name="reference_AddNote_header">Add note</string>
@@ -91,5 +92,13 @@
     <string name="vote_textBody">If you like our app, vote on the Google play and give feedback, we\'ll be very grateful</string>
     <string name="vote_textOk">Put 5 stars</string>
     <string name="vote_textCancel">Cancel</string>
+
+    <!-- Toogle кнопки -->
+    <string name="sound_textOff">Sound off</string>
+    <string name="sound_textOn">Sound on</string>
+
+    <string name="vibration_textOff">Shakes off</string>
+    <string name="vibration_textOn">Shakes on</string>
+
 
 </resources>

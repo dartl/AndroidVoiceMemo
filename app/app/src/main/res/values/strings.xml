@@ -34,6 +34,7 @@
         <!-- Окно просмотреть запись -->
         <string name="viewNote_copy">Скопировать весь текст</string>
         <string name="viewNote_deleteNote">Удалить</string>
+        <string name="viewNote_saveNote">Сохранить</string>
 
         <!-- Окно справки -->
         <string name="reference_AddNote_header">Добавление заметки</string>
@@ -112,5 +113,11 @@
         и оставьте свой отзыв, мы будем вам очень благодарны</string>
     <string name="vote_textOk">Поставить 5 звёзд</string>
     <string name="vote_textCancel">Отмена</string>
+
+    <string name="sound_textOff">Звук выкл.</string>
+    <string name="sound_textOn">Звук вкл.</string>
+
+    <string name="vibration_textOff">Вибрация выкл.</string>
+    <string name="vibration_textOn">Вибрация вкл.</string>
 
 </resources>

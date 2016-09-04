@@ -74,13 +74,13 @@
     </style>
 
     <style name="gawk_addNote_toggleVoice">
-        <item name="android:textOff">Звук выкл.</item>
-        <item name="android:textOn">Звук вкл.</item>
+        <item name="android:textOff">@string/sound_textOff</item>
+        <item name="android:textOn">@string/sound_textOn</item>
     </style>
 
     <style name="gawk_addNote_toggleVibration">
-        <item name="android:textOff">Вибрация выкл.</item>
-        <item name="android:textOn">Вибрация вкл.</item>
+        <item name="android:textOff">@string/vibration_textOff</item>
+        <item name="android:textOn">@string/vibration_textOn</item>
     </style>
 
 </resources>

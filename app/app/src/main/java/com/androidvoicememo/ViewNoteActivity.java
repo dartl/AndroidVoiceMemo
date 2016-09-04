@@ -1,20 +1,26 @@
 package com.androidvoicememo;
 
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidvoicememo.db.SQLiteDBHelper;
 import com.androidvoicememo.model.Note;
 import com.my.target.ads.MyTargetView;
 
@@ -48,6 +54,7 @@ public class ViewNoteActivity extends ParentActivity {
 
         btn_copyText.setOnClickListener(this);
 
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // Создаем экземпляр MyTargetView
         adView = (MyTargetView) findViewById(R.id.adMyView);
 
@@ -99,6 +106,8 @@ public class ViewNoteActivity extends ParentActivity {
         super.onCreateOptionsMenu(menu);
         deleteNoteItem.setVisible(true);
         cancelItem.setVisible(true);
+        saveNote.setVisible(true);
+
         //exportImportItem.setVisible(false);
         return true;
     }
@@ -114,9 +123,23 @@ public class ViewNoteActivity extends ParentActivity {
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
+            case R.id.action_saveNote:
+                saveNote(note, db);
+                finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean saveNote(Note note, SQLiteDatabase db)  {
+        ContentValues newValues = new ContentValues();
+        newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE, viewNote_textVText.getText().toString());
+        newValues.put(SQLiteDBHelper.NOTES_TABLE_COLUMN_DATE, note.getDate());
+        db.execSQL("UPDATE " +SQLiteDBHelper.NOTES_TABLE_NAME+ " SET "+ SQLiteDBHelper.NOTES_TABLE_COLUMN_TEXT_NOTE
+                +" = '" +viewNote_textVText.getText().toString()+ "' WHERE "+SQLiteDBHelper.NOTES_TABLE_COLUMN_ID
+                +" = "+note.getId()+";");
+        return true;
     }
 
     @Override
