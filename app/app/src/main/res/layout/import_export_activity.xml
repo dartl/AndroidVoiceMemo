@@ -18,7 +18,7 @@
         android:layout_below="@+id/toolbarTop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/adsBar">
+        android:layout_above="@+id/adMyView">
 
 
     <LinearLayout
@@ -130,13 +130,12 @@
     </LinearLayout>
 
     </FrameLayout>
-    <include
-        layout="@layout/ads_layout"
+    <com.my.target.ads.MyTargetView
+        android:id="@+id/adMyView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/adsBar"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </include>
+        android:layout_alignParentStart="true"></com.my.target.ads.MyTargetView>
 </RelativeLayout>

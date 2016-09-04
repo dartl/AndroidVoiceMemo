@@ -18,16 +18,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/relativeLayoutSecond"
         android:layout_below="@+id/toolbarTop"
-        android:layout_above="@+id/adsBar"
+        android:layout_above="@+id/adMyView"
         android:background="@color/style_gawk_mainColor_bg">
 
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/listViewNodes"
 
             android:divider="@null" android:dividerHeight="0dp"
@@ -38,4 +38,12 @@
 
     </RelativeLayout>
 
+    <com.my.target.ads.MyTargetView
+        android:id="@+id/adMyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></com.my.target.ads.MyTargetView>
 </RelativeLayout>

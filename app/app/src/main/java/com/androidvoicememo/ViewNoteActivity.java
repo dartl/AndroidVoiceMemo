@@ -49,16 +49,10 @@ public class ViewNoteActivity extends ParentActivity {
         btn_copyText.setOnClickListener(this);
 
         // Создаем экземпляр MyTargetView
-        adView = new MyTargetView(this);
+        adView = (MyTargetView) findViewById(R.id.adMyView);
 
         // Инициализируем экземпляр
         adView.init(SLOT_ID);
-        // Добавляем экземпляр в лэйаут главной активности
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.viewNote_layout);
-        RelativeLayout.LayoutParams adViewLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        adViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        adViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        layout.addView(adView, adViewLayoutParams);
 
         // Устанавливаем слушатель событий
         adView.setListener(new MyTargetView.MyTargetViewListener()
@@ -80,7 +74,6 @@ public class ViewNoteActivity extends ParentActivity {
             {
             }
         });
-
 
         adView.load();
     }
