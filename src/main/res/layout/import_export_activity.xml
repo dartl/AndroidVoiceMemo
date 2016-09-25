@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="@dimen/styleGawkMainPadding"
+    android:paddingRight="@dimen/styleGawkMainPadding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/styleGawkMainPadding"
+    android:background="@color/style_gawk_mainColor">
+    <include
+        layout="@layout/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbarTop">
+    </include>
+
+    <FrameLayout
+        android:layout_below="@+id/toolbarTop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/adsBar">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@color/style_gawk_mainColor_bg">
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/export_import_Export"
+                android:id="@+id/textView13"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/export_import_NamingFile"
+                android:id="@+id/textView14"
+                android:layout_below="@+id/textView13"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingTop="10dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText_SelectFile"
+                android:layout_alignTop="@+id/textView14"
+                android:layout_toRightOf="@+id/textView14"
+                android:layout_toEndOf="@+id/textView14"
+                android:lines="1"
+                android:maxLines="1"
+                android:inputType="text" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/export_import_ExportAction"
+                android:id="@+id/btn_Export"
+                android:layout_below="@+id/editText_SelectFile"
+                android:layout_centerHorizontal="true"
+                style="@style/gawk_style_button_invers" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/textView13"
+            android:layout_alignEnd="@+id/textView13"
+            android:layout_marginTop="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/export_import_Import"
+                    android:id="@+id/textView15"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/export_import_SelectFile"
+                    android:id="@+id/btn_SelectFile"
+                    android:layout_below="@+id/textView15"
+                    android:layout_centerHorizontal="true"
+                    style="@style/gawk_style_button_gray" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/export_import_ImportAction"
+                    android:id="@+id/btn_Import"
+                    android:layout_below="@+id/textView_SelectFile"
+                    android:layout_centerHorizontal="true"
+                    android:enabled="true"
+                    style="@style/gawk_style_button_invers" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/export_import_TV_SelectFile"
+                    android:id="@+id/textView_SelectFile"
+                    android:layout_below="@+id/btn_SelectFile"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    </FrameLayout>
+    <include
+        layout="@layout/ads_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/adsBar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </include>
+</RelativeLayout>

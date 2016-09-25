@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Названия окон -->
+    <string name="app_name">Voice notes</string>
+    <string name="app_name_addNote">Add note</string>
+    <string name="app_name_viewNote">View note</string>
+    <string name="app_name_searchNote">Search notes</string>
+    <string name="app_name_settings">Settings</string>
+    <string name="app_name_export_import">Import/Export</string>
+    <string name="app_name_reference">Reference</string>
+    <string name="app_exit">Exit</string>
+
+
+    <!-- Остальное -->
+    <string name="main_add_memo">Add note</string>
+    <string name="main_delete_note">Delete</string>
+    <string name="main_searchPhrase">Search...</string>
+    <string name="main_search">Search</string>
+
+    <!-- Окно Сделать запись -->
+    <string name="addNote_save">Save</string>
+    <string name="addNote_cancel">Cancel</string>
+    <string name="addNote_ready"></string>
+    <string name="addNote_recognitionText">Speak, and we will try to recognize the text...</string>
+    <string name="addNote_remember">Remind you?</string>
+    <string name="addNote_remember_30">30 minutes</string>
+    <string name="addNote_remember_60">1 hour</string>
+    <string name="addNote_remember_12">12 hours</string>
+    <string name="addNote_remember_not">not remind</string>
+    <string name="addNote_remember_custom">select a date and time</string>
+    <string name="addNote_remember_button_ok">Choose</string>
+    <string name="addNote_remember_button_cancel">Cancel</string>
+    <string name="addNote_sayFullText">Say the full text</string>
+
+    <!-- Окно просмотреть запись -->
+    <string name="viewNote_copy">Copy all</string>
+    <string name="viewNote_deleteNote">Delete</string>
+
+    <!-- Окно справки -->
+    <string name="reference_AddNote_header">Add note</string>
+        <string name="reference_AddNote_body">not translated...</string>
+    <string name="reference_Serach_header">Search note</string>
+        <string name="reference_Serach_body">not translated...</string>
+    <string name="reference_ViewNote_header">View note</string>
+        <string name="reference_ViewNote_body">not translated...</string>
+    <string name="reference_DeleteNote_header">Delete note</string>
+        <string name="reference_DeleteNote_body">not translated...</string>
+    <string name="reference_CopyNote_header">Copy text</string>
+        <string name="reference_CopyNote_body">not translated...</string>
+
+    <!-- Окно импорт/экспорт -->
+    <string name="export_import_Import">Import</string>
+    <string name="export_import_Export">Export</string>
+    <string name="export_import_ExportAction">Export</string>
+    <string name="export_import_ImportAction">Import</string>
+    <string name="export_import_NamingFile">File name:</string>
+    <string name="export_import_SelectFile">Select a file</string>
+    <string name="export_import_TV_SelectFile">The file is not selected ...</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Toast сообщения -->
+    <string name="head_select_date">Enter the date</string>
+    <string name="textNotRecognize">The text did not recognize</string>
+    <string name="errorAudio">Error audio</string>
+    <string name="errorNetwork">Error network</string>
+    <string name="tryAgain">Try again</string>
+    <string name="inMainWindow">In the main window</string>
+    <string name="errorRecognizeBusy">Error recognize busy</string>
+    <string name="errorServer">Error server</string>
+    <string name="attention">Attention</string>
+    <string name="weRecognize">We recognize the text, save or cancel saving the memo</string>
+    <string name="install">Install</string>
+    <string name="cancel">Cancel</string>
+    <string name="messageNeedInstall">For speech recognition, you must install the application
+         "Google" with the function of voice search.</string>
+    <string name="errorConnectionInternet">Error connecting to the internet</string>
+    <string name="exportSuccess">Export successful. The file is located here</string>
+    <string name="exportNameFile">Enter the file name</string>
+    <string name="selectFile">The selected file</string>
+    <string name="importSuccess">Import successful</string>
+    <string name="importNotSuccess">Import failed</string>
+    <string name="saveNote">Note saved</string>
+    <string name="textSaveSuccess">Text successfully copied</string>
+
+    <!-- id рекламного блока -->
+    <string name="banner_ad_unit_id">ca-app-pub-3962065675469859/3569530194</string>
+
+    <!-- Предложение проголосовать и оставить отзыв -->
+    <string name="vote_textHeader">Did you like our app?</string>
+    <string name="vote_textBody">If you like our app, vote on the Google play and give feedback, we\'ll be very grateful</string>
+    <string name="vote_textOk">Put 5 stars</string>
+    <string name="vote_textCancel">Cancel</string>
+
+</resources>

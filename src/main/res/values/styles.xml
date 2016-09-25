@@ -1,0 +1,88 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="actionBarStyle">@style/ActionBarTheme</item>
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+    </style>
+
+    <style name="WindowTitleBackground">
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:popupBackground">@color/primary_dark_material_light</item>
+    </style>
+
+    <style name="gawk_style_button">
+        <item name="android:background">@drawable/button_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="gawk_style_button_delete" parent="gawk_style_button_red">
+        <item name="android:drawableTop">@drawable/delete_note</item>
+        <item name="android:textOn">false</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="gawk_style_button_red">
+        <item name="android:background">@drawable/button_red_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="gawk_style_button_invers">
+        <item name="android:background">@drawable/button_invers_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="gawk_style_button_gray">
+        <item name="android:background">@drawable/button_gray_animation</item>
+        <item name="android:paddingTop">@dimen/addNote_button_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/addNote_button_padding</item>
+    </style>
+
+    <style name="gawk_style_date">
+        <item name="android:drawableLeft">@drawable/icon_time</item>
+        <item name="android:textColor">@color/dateColor</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="gawk_style_list_node">
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:background">@drawable/row_background</item>
+        <item name="android:paddingRight">@dimen/main_padding_list_node</item>
+        <item name="android:paddingLeft">@dimen/main_padding_list_node</item>
+    </style>
+
+    <style name="gawk_addNote">
+        <item name="android:layout_marginRight">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
+    <style name="gawk_addNote_textField">
+        <item name="android:padding">6dp</item>
+        <item name="android:background">#fff</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="gawk_addNote_toggleVoice">
+        <item name="android:textOff">Звук выкл.</item>
+        <item name="android:textOn">Звук вкл.</item>
+    </style>
+
+    <style name="gawk_addNote_toggleVibration">
+        <item name="android:textOff">Вибрация выкл.</item>
+        <item name="android:textOn">Вибрация вкл.</item>
+    </style>
+
+</resources>
+
+

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Голосові замітки</string>
+    <string name="app_name_addNote">Створити замітку</string>
+    <string name="app_name_viewNote">Перегляд нотатки</string>
+    <string name="app_name_searchNote">Пошук по замітках</string>
+    <string name="app_name_settings">Налаштування</string>
+    <string name="app_name_export_import">Імпорт/експорт</string>
+    <string name="app_name_reference">Довідка</string>
+    <string name="app_exit">Вихід</string>
+
+
+    <!-- Решта -->
+    <string name="main_add_memo">Зробити нотатку</string>
+    <string name="main_delete_note">Видалити</string>
+    <string name="main_searchPhrase">Пошук...</string>
+    <string name="main_search">Пошук</string>
+
+    <!-- Вікно Зробити запис -->
+    <string name="addNote_save">Зберегти</string>
+    <string name="addNote_cancel">Скасувати</string>
+    <string name="addNote_ready"></string>
+    <string name="addNote_recognitionText">Говорите, а ми спробуємо розпізнати текст...</string>
+    <string name="addNote_remember">Нагадати Вам?</string>
+    <string name="addNote_remember_30">через 30 хвилин</string>
+    <string name="addNote_remember_60">через 1 годину</string>
+    <string name="addNote_remember_12">через 12 годин</string>
+    <string name="addNote_remember_not">не нагадувати</string>
+    <string name="addNote_remember_custom">вибрати дату і час</string>
+    <string name="addNote_remember_button_ok">Вибрати</string>
+    <string name="addNote_remember_button_cancel">Скасувати</string>
+    <string name="addNote_sayFullText">Вимовте замітку повністю</string>
+
+    <!-- Вікно переглянути запис -->
+    <string name="viewNote_copy">Скопіювати весь текст</string>
+    <string name="viewNote_deleteNote">Видалити</string>
+    <string name="viewNote_saveNote">Зберегти</string>
+
+    <!-- Вікно довідки -->
+    <string name="reference_AddNote_header">Додавання нотатки</string>
+<string name="reference_AddNote_body">Для додавання нової нотатки натисніть на кнопку
+"Створити замітку" в головному вікні програми, або вибравши відповідний пункт меню.\пВ
+вікні дочекайтеся запуску таймера і повідомлення, що можна говорити і
+ скажіть вашу замітку.\після чого дочекайтеся, поки програма розпізнає ваш голос і
+виведе відповідний текст у полі нижній частині екрана. Для більш коректного та
+правильного розпізнавання намагайтеся говорити чітко і голосно. Тепер ви можете вибрати -
+варто нагадати вам про замітці. Для збереження натисніть кнопку "Зберегти", для відміни
+збереження "Скасувати".\пЕсли текст нотатки розпізнати не вдалося, натисніть "Скасувати" і
+повторіть створення нотатки.</string>
+    <string name="reference_Serach_header">Пошук по замітках</string>
+<string name="reference_Serach_body">Для пошуку по замітках введіть пошукову фразу в
+текстове поле на головній сторінці. Після чого натисніть "Знайти", під полем пошуку
+відобразяться всі замітки, що містять в собі шукану фразу.\пМожет бути випадок, коли
+шукана фраза знаходиться в повному описі замітки, тому в короткому змісті її
+немає.\пЧтобы переглянути повний зміст - клікніть на цікаву для вас
+ замітку.\пЧтобы скинути параметри пошуку натисніть кнопку "Скинути".</string>
+    <string name="reference_ViewNote_header">Перегляд нотатки</string>
+<string name="reference_ViewNote_body">Для перегляду повного тексту замітки клікніть по
+вас цікавить замітки в головному вікні програми. Відкриється повний опис нотатки.</string>
+    <string name="reference_DeleteNote_header">Видалити нотатки</string>
+<string name="reference_DeleteNote_body">видалити нотатки, зайде в повний опис
+ замітки і натисніть на кнопку "Видалити" у верхній правій частині вікна.</string>
+    <string name="reference_CopyNote_header">Скоппировать текст нотатки</string>
+<string name="reference_CopyNote_body">Для того, щоб скоппировать повний текст нотатки,
+зайдіть в повний опис замітки і нажминте на кнопку "Коппировать текст замітки"</string>
+
+    <!-- Вікно імпорт/експорт -->
+    <string name="export_import_Import">Імпорт</string>
+    <string name="export_import_Export">Експорт</string>
+    <string name="export_import_ExportAction">Експортувати</string>
+    <string name="export_import_ImportAction">Імпортувати</string>
+    <string name="export_import_NamingFile">Назва файлу:</string>
+    <string name="export_import_SelectFile">Вибрати файл</string>
+    <string name="export_import_TV_SelectFile">Файл не вибраний...</string>
+    <string name="action_settings">Налаштування</string>
+
+    <!-- Toast повідомлення -->
+    <string name="head_select_date">Введіть дату</string>
+    <string name="textNotRecognize">Текст не вдалося розпізнати</string>
+    <string name="errorAudio">Помилка запису звуку з мікрофону</string>
+<string name="errorNetwork">Помилка підключення до інтернету. Перевірте підключення до інтернету
+і спробуйте знову.</string>
+    <string name="tryAgain">Спробувати знову</string>
+    <string name="inMainWindow">В головне вікно</string>
+<string name="errorRecognizeBusy">Сервер розпізнання мови на даний момент зайнятий,
+спробуйте пойзже.</string>
+<string name="errorServer">Помилка на стороні сервера. Перевірте підключення до інтернету і
+спробуйте знову.</string>
+    <string name="attention">Увага</string>
+    <string name="weRecognize">Ми розпізнали текст, збережіть або зніміть збереження замітки</string>
+    <string name="install">Встановити</string>
+    <string name="cancel">Скасувати</string>
+<string name="messageNeedInstall">Для розпізнавання мовлення необхідно встановити додаток
+"Google" з функцією голосового пошуку.</string>
+<string name="errorConnectionInternet">Для розпізнання необхідно підключення до інтернету,
+але ви можете створити замітку, набравши її вручну.</string>
+    <string name="create_Note_NoInternet">Все одно</string>
+    <string name="exportSuccess">Експорт успішний. Файл знаходиться ось тут</string>
+    <string name="exportNameFile">Для експорту введіть назву майбутнього файлу</string>
+    <string name="selectFile">Був обраний файл</string>
+    <string name="importSuccess">Імпорт відбувся успішно</string>
+    <string name="importNotSuccess">Імпорт не вдалося зробити, не коректна структура файлу</string>
+    <string name="saveNote">Замітка збережена</string>
+    <string name="textSaveSuccess">Текст успішно скоппирован</string>
+
+
+    <!-- id рекламного блоку -->
+    <string name="banner_ad_unit_id">ca-app-pub-3962065675469859/3569530194</string>
+
+    <!-- Пропозиція проголосувати та залишити відгук -->
+    <string name="vote_textHeader">Вам сподобалося наше додаток?</string>
+<string name="vote_textBody">Якщо вам сподобався наш додаток, проголосуйте на Google play
+і залиште свій відгук, ми будемо вам дуже вдячні</string>
+    <string name="vote_textOk">Поставити 5 зірок</string>
+    <string name="vote_textCancel">Скасувати</string>
+
+    <string name="sound_textOff">Звук викл.</string>
+    <string name="sound_textOn">вкл Звук.</string>
+
+    <string name="vibration_textOff">Вібрація викл.</string>
+    <string name="vibration_textOn">Вібрація вкл.</string>
+</resources>
